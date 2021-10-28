@@ -42,8 +42,8 @@
         WIDGET_TEXT_COLOR: "#DDD",
         WIDGET_SECONDARY_TEXT_COLOR: "#999",
 
-        LINK_COLOR: "#9A9",
-        EVENT_LINK_COLOR: "#A86",
+        LINK_COLOR: "#5c765c",
+        EVENT_LINK_COLOR: "#bff6bf",
         CONNECTING_LINK_COLOR: "#AFA",
 
         MAX_NUMBER_OF_NODES: 1000, //avoid infinite loops
@@ -8562,6 +8562,11 @@ LGraphNode.prototype.executeAction = function(action)
         }
 
         ctx.lineWidth = this.connections_width;
+        let _type = this.connecting_output?.type ?? link?.type;
+        if(_type === -1) {  // mixed event slot
+            ctx.lineWidth += 1;
+        }
+
         ctx.fillStyle = ctx.strokeStyle = color;
         ctx.stroke();
         //end line shape

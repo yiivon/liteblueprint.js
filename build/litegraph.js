@@ -8562,6 +8562,9 @@ LGraphNode.prototype.executeAction = function(action)
         }
 
         ctx.lineWidth = this.connections_width;
+        if(this.connecting_output && this.connecting_output.type === -1) {  // mixed event slot
+            ctx.lineWidth += 2;
+        }
         ctx.fillStyle = ctx.strokeStyle = color;
         ctx.stroke();
         //end line shape
