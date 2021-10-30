@@ -12,13 +12,7 @@ Concentrator.title = "集线器";
 Concentrator.desc = "将多个输入汇集为一束数据通过事件触发传递给下游接收者。";
 
 Concentrator.prototype.onAction = function (action, param) {
-    if (action == "log") {
-        console.log(param);
-    } else if (action == "warn") {
-        console.warn(param);
-    } else if (action == "error") {
-        console.error(param);
-    }
+    console.log(arguments);
 };
 
 Concentrator.prototype.onExecute = function () {
@@ -31,9 +25,6 @@ Concentrator.prototype.onExecute = function () {
 
 Concentrator.prototype.onGetInputs = function () {
     return [
-        ["log", LiteGraph.ACTION],
-        ["warn", LiteGraph.ACTION],
-        ["error", LiteGraph.ACTION]
     ];
 };
 
