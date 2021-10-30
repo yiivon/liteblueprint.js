@@ -1,15 +1,17 @@
 
 function MT4Client() {
     this.size = [60, 20];
-    this.addInput("send", LiteGraph.ACTION);
-    this.addOutput("received", LiteGraph.EVENT);
-    this.addInput("in", 0);
-    this.addOutput("out", 0);
+    this.addInput("stop", LiteGraph.ACTION, {label: '停止'});
+    this.addInput("trade", LiteGraph.ACTION, {label: '交易'});
+    this.addOutput("tick", LiteGraph.EVENT, {label: '报价'});
+    this.addOutput("trade", LiteGraph.EVENT, {label: '交易'});
+
     this.properties = {
         url: "",
         room: "lgraph", //allows to filter messages,
         only_send_changes: true
     };
+
     this._ws = null;
     this._last_sent_data = [];
     this._last_received_data = [];

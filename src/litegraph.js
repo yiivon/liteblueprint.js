@@ -11172,51 +11172,51 @@ LGraphNode.prototype.executeAction = function(action)
         } else {
             options = [
                 {
-                    content: "Inputs",
+                    content: "输入",
                     has_submenu: true,
                     disabled: true,
                     callback: LGraphCanvas.showMenuNodeOptionalInputs
                 },
                 {
-                    content: "Outputs",
+                    content: "输出",
                     has_submenu: true,
                     disabled: true,
                     callback: LGraphCanvas.showMenuNodeOptionalOutputs
                 },
                 null,
                 {
-                    content: "Properties",
+                    content: "属性",
                     has_submenu: true,
                     callback: LGraphCanvas.onShowMenuNodeProperties
                 },
                 null,
                 {
-                    content: "Title",
+                    content: "标题",
                     callback: LGraphCanvas.onShowPropertyEditor
                 },
                 {
-                    content: "Mode",
+                    content: "模式",
                     has_submenu: true,
                     callback: LGraphCanvas.onMenuNodeMode
                 },
                 {
-                    content: "Resize", callback: function () {
+                    content: "重置尺寸", callback: function () {
                         if (node.resizable)
                             return LGraphCanvas.onResizeNode;
                     }
                 },
                 {
-                    content: "Collapse",
+                    content: "收起",
                     callback: LGraphCanvas.onMenuNodeCollapse
                 },
-                {content: "Pin", callback: LGraphCanvas.onMenuNodePin},
+                {content: "固定", callback: LGraphCanvas.onMenuNodePin},
                 {
-                    content: "Colors",
+                    content: "颜色",
                     has_submenu: true,
                     callback: LGraphCanvas.onMenuNodeColors
                 },
                 {
-                    content: "Shapes",
+                    content: "形状",
                     has_submenu: true,
                     callback: LGraphCanvas.onMenuNodeShapes
                 },
