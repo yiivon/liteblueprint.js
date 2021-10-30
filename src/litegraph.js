@@ -3259,6 +3259,14 @@
     };
 
     /**
+     * remove all existing input slots
+     * @method removeAllInputs
+     */
+    LiteGraph.prototype.removeAllInputs = function () {
+
+    }
+
+    /**
      * add an special connection to this node (used for special kinds of graphs)
      * @method addConnection
      * @param {string} name
