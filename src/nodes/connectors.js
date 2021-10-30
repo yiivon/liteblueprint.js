@@ -60,7 +60,7 @@ Concentrator.prototype.onConnectionsChange = function (type,
             return;
         }
 
-        let output_nodes = this.getOutputNodes();
+        let output_nodes = this.getOutputNodes(0);
 
         for(let p in scheme) {
             if(!scheme.hasOwnProperty(p)) continue;
