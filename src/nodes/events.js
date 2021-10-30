@@ -51,14 +51,14 @@
     //Sequencer for events
     function Sequencer() {
 		var that = this;
-        this.addInput("", LiteGraph.ACTION);
+        this.addInput("", LiteGraph.ACTION, {scheme: {a: 'number', b: 'string'}});
         this.addInput("", LiteGraph.ACTION);
         this.addInput("", LiteGraph.ACTION);
         this.addOutput("", LiteGraph.EVENT);
         this.addOutput("", LiteGraph.EVENT);
         this.addOutput("", LiteGraph.EVENT);
         this.addWidget("button","+",null,function(){
-	        that.addInput("", LiteGraph.ACTION);
+	        that.addInput("", LiteGraph.ACTION, {scheme: {a: 'number', b: 'string'}});
 	        that.addOutput("", LiteGraph.EVENT);
         });
         this.size = [90, 70];
