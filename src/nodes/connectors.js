@@ -52,7 +52,7 @@ Concentrator.prototype.onConnectionsChange = function (type,
         let slot = target_node.inputs?.[link.target_slot];
         if(!slot) return;
 
-        let scheme = slot.scheme ?? {};
+        let scheme = slot.scheme ?? {a: 'string', b: 'number'};
         if(!scheme) return;
 
         let ii = this.inputs?.length;
@@ -60,6 +60,13 @@ Concentrator.prototype.onConnectionsChange = function (type,
             this.removeInput(i);
         }
 
+        for(let p in scheme) {
+            if(!scheme.hasOwnProperty(p)) continue;
+
+            let v = scheme[p];
+            v = (typeof v === 'string' ? {type: v} : v);
+            this.addInput(p, v.type);
+        }
     }
 };
 
