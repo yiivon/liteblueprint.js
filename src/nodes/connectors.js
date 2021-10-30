@@ -3,7 +3,7 @@ function Concentrator() {
     this.mode = LiteGraph.ON_EVENT;
     this.size = [80, 30];
     this.addProperty("msg", "");
-    this.addInput("log", LiteGraph.EVENT);
+    this.addInput("in", LiteGraph.EVENT);
     this.addInput("msg", 0);
     this.addOutput("out", LiteGraph.EVENT);
 }
@@ -71,12 +71,11 @@ function Distributor() {
     this.mode = LiteGraph.ON_EVENT;
     this.size = [80, 30];
     this.addProperty("msg", "");
-    this.addInput("log", LiteGraph.EVENT);
-    this.addInput("msg", 0);
+    this.addInput("in", LiteGraph.EVENT);
 }
 
 Distributor.title = "分线器";
-Distributor.desc = "Show value inside the console";
+Distributor.desc = "将触发事件附带的数据分解为多个输出。";
 
 LiteGraph.registerNodeType("连接件/分线器", Distributor);
 
