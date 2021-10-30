@@ -4189,7 +4189,8 @@
                 }
 
                 //search in the inputs list for this link
-                for (let i = 0, l = output.links.length; i < l; i++) {
+                let i = 0, l = output.links.length;
+                for (i = 0; i < l; i++) {
                     if (output.links[i] == link_id) {
                         output.links.splice(i, 1);
                         break;

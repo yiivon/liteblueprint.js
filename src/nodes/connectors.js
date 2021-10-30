@@ -11,7 +11,9 @@ Concentrator.title = "集线器";
 Concentrator.desc = "将多个输入汇集为一束数据通过事件触发传递给下游接收者。";
 
 Concentrator.prototype.onAction = function (action, param) {
-    console.log(arguments);
+    //console.log(arguments);
+    if(action === 'in')
+        this.triggerSlot(0, param);
 };
 
 Concentrator.prototype.onExecute = function () {
