@@ -3185,7 +3185,8 @@
         type = type || 0;
         var o = {name: name, type: type, link: null};
         if (extra_info) {
-            for (var i in extra_info) {
+            for (let i in extra_info) {
+                if(!extra_info.hasOwnProperty(i)) continue;
                 o[i] = extra_info[i];
             }
         }
@@ -3214,9 +3215,10 @@
         for (var i = 0; i < array.length; ++i) {
             var info = array[i];
             var o = {name: info[0], type: info[1], link: null};
-            if (array[2]) {
-                for (var j in info[2]) {
-                    o[j] = info[2][j];
+            if (info[2]) {
+                for (let j in info[2]) {
+                    if(info[2].hasOwnProperty(j))
+                        o[j] = info[2][j];
                 }
             }
 
