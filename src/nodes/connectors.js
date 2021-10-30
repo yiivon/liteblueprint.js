@@ -4,7 +4,6 @@ function Concentrator() {
     this.size = [80, 30];
     this.addProperty("msg", "");
     this.addInput("in", LiteGraph.EVENT);
-    this.addInput("msg", 0);
     this.addOutput("out", LiteGraph.EVENT);
 }
 
