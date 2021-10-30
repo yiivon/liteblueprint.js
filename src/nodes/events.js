@@ -58,7 +58,7 @@
         this.addOutput("", LiteGraph.EVENT);
         this.addOutput("", LiteGraph.EVENT);
         this.addWidget("button","+",null,function(){
-	        that.addInput("", LiteGraph.ACTION, {scheme: {a: 'number', b: 'string'}});
+	        that.addInput("", LiteGraph.ACTION, {scheme: {a: 'number', b: 'boolean'}});
 	        that.addOutput("", LiteGraph.EVENT);
         });
         this.size = [90, 70];
