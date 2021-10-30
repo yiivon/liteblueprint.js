@@ -2,7 +2,7 @@
 function Concentrator() {
     this.mode = LiteGraph.ON_EVENT;
     this.size = [80, 30];
-    this.addProperty("msg", "");
+    //this.addProperty("msg", "");
     this.addInput("in", LiteGraph.EVENT);
     this.addOutput("out", LiteGraph.EVENT);
 }
@@ -29,8 +29,6 @@ Concentrator.prototype.onConnectionsChange = function (type,
                                                        link,
                                                        ioSlot) {
     if(type === LiteGraph.OUTPUT) {
-        // TODO: should be merging all nodes' scheme relate to
-        debugger
         let linked_info = this.getOutputLinkedSlots(link.origin_slot) ?? [];
         let scheme = linked_info.reduce((obj, info, i) => {
             let slot = info.slot;
