@@ -16,11 +16,7 @@ Concentrator.prototype.onAction = function (action, param) {
 };
 
 Concentrator.prototype.onExecute = function () {
-    var msg = this.getInputData(1);
-    if (msg !== null) {
-        this.properties.msg = msg;
-    }
-    console.log(msg);
+
 };
 
 Concentrator.prototype.onGetInputs = function () {
