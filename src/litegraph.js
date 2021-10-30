@@ -2931,6 +2931,41 @@
     };
 
     /**
+     * retrieves all the nodes/slots linked to this output slot
+     * @method getOutputLinkedSlots
+     * @param {number} slot
+     * @return {array} [{node,slot},...]
+     */
+    LGraphNode.prototype.getOutputLinkedSlots = function (slot) {
+        if (!this.outputs || this.outputs.length === 0) {
+            return null;
+        }
+
+        if (slot >= this.outputs.length) {
+            return null;
+        }
+
+        let output = this.outputs[slot];
+        if (!output || !output.links || output.links.length === 0) {
+            return null;
+        }
+
+        let r = [];
+        for (let i = 0; i < output.links.length; i++) {
+            let link_id = output.links[i];
+            let link = this.graph.links[link_id];
+            if (link) {
+                let target_node = this.graph.getNodeById(link.target_id);
+                if (target_node) {
+                    r.push({node: target_node, slot: target_node.getInputNode(link.target_slot)});
+                }
+            }
+        }
+
+        return r;
+    }
+
+    /**
      * Triggers an event in this node, this will trigger any output with the same name
      * @method trigger
      * @param {String} event name ( "on_play", ... ) if action is equivalent to false then the event is send to all
