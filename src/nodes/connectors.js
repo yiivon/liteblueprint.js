@@ -49,6 +49,9 @@ Concentrator.prototype.onConnectionsChange = function (type,
             return;
         }
 
+        // TODO: should be merging all nodes' scheme relate to
+        //let output_nodes = this.getOutputNodes(0);
+
         let slot = target_node.getInputInfo(link.target_slot);
         if(!slot) return;
 
@@ -59,8 +62,6 @@ Concentrator.prototype.onConnectionsChange = function (type,
         if(!isConnected) {
             return;
         }
-
-        let output_nodes = this.getOutputNodes(0);
 
         for(let p in scheme) {
             if(!scheme.hasOwnProperty(p)) continue;
