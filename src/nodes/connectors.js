@@ -69,6 +69,7 @@ function Distributor() {
     this.size = [80, 30];
     this.addProperty("msg", "");
     this.addInput("in", LiteGraph.EVENT);
+    this.addOutput("out", LiteGraph.EVENT);
 }
 
 Distributor.title = "分线器";

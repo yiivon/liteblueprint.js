@@ -3175,6 +3175,77 @@
         this.setDirtyCanvas(true, true);
     };
 
+
+    /**
+     * remove all existing output slots
+     * @method removeAllOutputs
+     */
+    LGraphNode.prototype.removeAllOutputs = function () {
+        for (let i = 0; i < this.outputs.length; i++) {
+            let slot_info = this.outputs[i];
+            this.disconnectOutput(i);
+
+            if (this.onOutputRemoved) {
+                this.onOutputRemoved(i, slot_info[0]);
+            }
+        }
+
+        this.outputs = [];
+        this.setSize(this.computeSize());
+        this.setDirtyCanvas(true, true);
+    }
+
+    /**
+     * remove output slot(s) by predicate condition
+     * @method removeOutputBy
+     * @param {number|function} by_cb is the predicate to remove, can be slot type or a function return true
+     */
+    LGraphNode.prototype.removeOutputBy = function (by_cb) {
+        if (!by_cb) {
+            return;
+        }
+
+        if (by_cb === true) {
+            return this.removeAllInputs();
+        }
+
+        // remove
+        let inputs_ = [];
+        for (let i = 0; i < this.inputs.length; i++) {
+            let slot_info = this.inputs[i];
+            if (!isNaN(by_cb)) {
+                // number, slot type
+                if (slot_info.type === by_cb) {
+                    if (this.onInputRemoved) {
+                        this.onInputRemoved(i, slot_info[0]);
+                    }
+                } else {
+                    inputs_.push(slot_info);
+                }
+            } else if (typeof by_cb === 'function') {
+                if (by_cb(slot_info) === true) {
+                    if (this.onInputRemoved) {
+                        this.onInputRemoved(i, slot_info[0]);
+                    }
+                } else {
+                    inputs_.push(slot_info);
+                }
+            }
+        }
+
+        this.inputs = inputs_;
+        // update link with the nodes still living
+        for (let i = 0; i < this.inputs.length; i++) {
+            let link = this.graph.links[this.inputs[i].link];
+            if (link) {
+                link.target_slot = i;
+            }
+        }
+
+        this.setSize(this.computeSize());
+        this.setDirtyCanvas(true, true);
+    };
+
     /**
      * add a new input slot to use in this node
      * @method addInput
