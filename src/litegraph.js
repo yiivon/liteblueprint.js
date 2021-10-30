@@ -3101,8 +3101,7 @@
         var o = {name: name, type: type, links: null};
         if (extra_info) {
             for (let i in extra_info) {
-               if(extra_info.hasOwnProperty(i))
-                   o[i] = extra_info[i];
+                o[i] = extra_info[i];
             }
         }
 
@@ -3129,8 +3128,7 @@
             var o = {name: info[0], type: info[1], link: null};
             if (info[2]) {
                 for (let j in info[2]) {
-                    if(info[2].hasOwnProperty(j))
-                        o[j] = info[2][j];
+                    o[j] = info[2][j];
                 }
             }
 
@@ -3188,7 +3186,6 @@
         var o = {name: name, type: type, link: null};
         if (extra_info) {
             for (let i in extra_info) {
-                if(!extra_info.hasOwnProperty(i)) continue;
                 o[i] = extra_info[i];
             }
         }
@@ -3219,8 +3216,7 @@
             var o = {name: info[0], type: info[1], link: null};
             if (info[2]) {
                 for (let j in info[2]) {
-                    if(info[2].hasOwnProperty(j))
-                        o[j] = info[2][j];
+                    o[j] = info[2][j];
                 }
             }
 

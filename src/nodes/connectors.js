@@ -49,6 +49,16 @@ Concentrator.prototype.onConnectionsChange = function (type,
             return;
         }
 
+        let slot = target_node.inputs?.[link.target_slot];
+        if(!slot) return;
+
+        let scheme = slot.scheme ?? {};
+        if(!scheme) return;
+
+        let ii = this.inputs?.length;
+        for(let i=0; i<ii; i++) {
+            this.removeInput(i);
+        }
 
     }
 };
