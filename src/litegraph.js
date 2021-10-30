@@ -2910,12 +2910,12 @@
             return null;
         }
 
-        var output = this.outputs[slot];
-        if (!output.links || output.links.length == 0) {
+        let output = this.outputs[slot];
+        if (!output || !output.links || output.links.length == 0) {
             return null;
         }
 
-        var r = [];
+        let r = [];
         for (var i = 0; i < output.links.length; i++) {
             var link_id = output.links[i];
             var link = this.graph.links[link_id];
@@ -2926,6 +2926,7 @@
                 }
             }
         }
+
         return r;
     };
 

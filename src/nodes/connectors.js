@@ -56,6 +56,11 @@ Concentrator.prototype.onConnectionsChange = function (type,
         if(!scheme) return;
 
         this.removeAllInputs();
+        if(!isConnected) {
+            return;
+        }
+
+        let output_nodes = this.getOutputNodes();
 
         for(let p in scheme) {
             if(!scheme.hasOwnProperty(p)) continue;
