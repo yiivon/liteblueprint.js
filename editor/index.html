@@ -52,10 +52,10 @@
         this.addInput("msg", 0);
     }
 
-    Concentrator.title = "Concentrator";
-    Concentrator.desc = "Show value inside the console";
+    Concentrator.title = "集线器";
+    Concentrator.desc = "将多个输入汇集为一束数据通过事件触发传递给下游接收者。";
 
-    Concentrator.prototype.onAction = function(action, param) {
+    Concentrator.prototype.onAction = function (action, param) {
         if (action == "log") {
             console.log(param);
         } else if (action == "warn") {
@@ -65,7 +65,7 @@
         }
     };
 
-    Concentrator.prototype.onExecute = function() {
+    Concentrator.prototype.onExecute = function () {
         var msg = this.getInputData(1);
         if (msg !== null) {
             this.properties.msg = msg;
@@ -73,12 +73,22 @@
         console.log(msg);
     };
 
-    Concentrator.prototype.onGetInputs = function() {
+    Concentrator.prototype.onGetInputs = function () {
         return [
             ["log", LiteGraph.ACTION],
             ["warn", LiteGraph.ACTION],
             ["error", LiteGraph.ACTION]
         ];
+    };
+
+    Concentrator.prototype.onConnectionsChange = function (type,
+                                                           slotIndex,
+                                                           isConnected,
+                                                           link,
+                                                           ioSlot) {
+        if(type === LiteGraph.OUTPUT) {
+
+        }
     };
 
     LiteGraph.registerNodeType("连接件/集线器", Concentrator);
@@ -92,7 +102,7 @@
         this.addInput("msg", 0);
     }
 
-    Distributor.title = "Distributor";
+    Distributor.title = "分线器";
     Distributor.desc = "Show value inside the console";
 
     LiteGraph.registerNodeType("连接件/分线器", Distributor);
