@@ -3279,30 +3279,47 @@
     }
 
     LGraphNode.prototype.removeInputBy = function (by_cb) {
-        if(!by_cb) {
+        if (!by_cb) {
             return;
         }
 
-        if(by_cb === true) {
+        if (by_cb === true) {
             return this.removeAllInputs();
         }
 
-        let tmp = [];
-        for (let i=0; i<this.inputs; i++) {
+        // remove
+        for (let i = 0; i < this.inputs.length; i++) {
             let slot_info = this.inputs[i];
 
-            if(!isNaN(by_cb)) {
+            if (!isNaN(by_cb)) {
                 // number, slot type
-                if(slot_info.type === by_cb) {
-
+                if (slot_info.type === by_cb) {
+                    this.inputs.slice(i, 1);
+                    if (this.onInputRemoved) {
+                        this.onInputRemoved(i, slot_info[0]);
+                    }
                 }
-            } else if(typeof by_cb === 'function') {
-                if(by_cb(slot_info)) {
-
+            } else if (typeof by_cb === 'function') {
+                if (by_cb(slot_info)) {
+                    this.inputs.slice(i, 1);
+                    if (this.onInputRemoved) {
+                        this.onInputRemoved(i, slot_info[0]);
+                    }
                 }
             }
         }
 
+        if (!this.inputs) this.inputs = [];
+        // update link with the nodes still living
+        for (let i = 0; i < this.inputs.length; i++) {
+            let link = this.graph.links[this.inputs[i].link];
+            if (link) {
+                link.target_slot = i;
+            }
+        }
+
+        this.setSize(this.computeSize());
+        this.setDirtyCanvas(true, true);
     };
 
     /**
