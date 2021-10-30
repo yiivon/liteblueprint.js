@@ -29,24 +29,21 @@ Concentrator.prototype.onConnectionsChange = function (type,
                                                        link,
                                                        ioSlot) {
     if(type === LiteGraph.OUTPUT) {
-        let target_node = link ? this.graph.getNodeById(link.target_id) : null;
-
-        if (!target_node) {
-            return;
-        }
-
         // TODO: should be merging all nodes' scheme relate to
-        //let output_nodes = this.getOutputNodes(0);
-
-        let slot = target_node.getInputInfo(link.target_slot);
-        if(!slot) return;
-
-        let scheme = slot.scheme ?? {};
-        if(!scheme) return;
+        debugger
+        let output_nodes = this.getOutputNodes(link.origin_slot) ?? [];
+        let scheme = output_nodes.reduce((obj, node, i) => {
+            let slot = node.getInputInfo(link.target_slot);
+            if(slot) {
+                Object.assign(obj, slot.scheme ?? {});
+            }
+            return obj;
+        }, {});
 
         this.removeInputBy((slot) => {
             return slot.type !== LiteGraph.EVENT;
         });
+
         if(!isConnected) {
             return;
         }
