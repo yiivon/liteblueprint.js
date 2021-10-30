@@ -3284,6 +3284,33 @@
         this.setDirtyCanvas(true, true);
     }
 
+    LGraphNode.prototype.removeInputBy = function (by_cb) {
+        if(!by_cb) {
+            return;
+        }
+
+        if(by_cb === true) {
+            return this.removeAllInputs();
+        }
+
+        let tmp = [];
+        for (let i=0; i<this.inputs; i++) {
+            let slot_info = this.inputs[i];
+
+            if(!isNaN(by_cb)) {
+                // number, slot type
+                if(slot_info.type === by_cb) {
+
+                }
+            } else if(typeof by_cb === 'function') {
+                if(by_cb(slot_info)) {
+
+                }
+            }
+        }
+
+    };
+
     /**
      * add an special connection to this node (used for special kinds of graphs)
      * @method addConnection
