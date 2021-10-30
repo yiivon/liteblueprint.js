@@ -2957,7 +2957,7 @@
             if (link) {
                 let target_node = this.graph.getNodeById(link.target_id);
                 if (target_node) {
-                    r.push({node: target_node, slot: target_node.getInputNode(link.target_slot)});
+                    r.push({node: target_node, slot: target_node.getInputInfo(link.target_slot)});
                 }
             }
         }
