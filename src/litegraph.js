@@ -3299,14 +3299,14 @@
             if (!isNaN(by_cb)) {
                 // number, slot type
                 if (slot_info.type === by_cb) {
-                    this.inputs.slice(i, 1);
+                    this.inputs.splice(i, 1);
                     if (this.onInputRemoved) {
                         this.onInputRemoved(i, slot_info[0]);
                     }
                 }
             } else if (typeof by_cb === 'function') {
                 if (by_cb(slot_info) === true) {
-                    this.inputs.slice(i, 1);
+                    this.inputs.splice(i, 1);
                     if (this.onInputRemoved) {
                         this.onInputRemoved(i, slot_info[0]);
                     }
