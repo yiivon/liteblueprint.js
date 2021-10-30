@@ -49,7 +49,7 @@ Concentrator.prototype.onConnectionsChange = function (type,
             return;
         }
 
-        let slot = target_node.inputs?.[link.target_slot];
+        let slot = target_node.getInputInfo(link.target_slot);
         if(!slot) return;
 
         let scheme = slot.scheme ?? {a: 'string', b: 'number'};
