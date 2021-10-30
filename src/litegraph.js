@@ -2902,7 +2902,7 @@
      * @return {array}
      */
     LGraphNode.prototype.getOutputNodes = function (slot) {
-        if (!this.outputs || this.outputs.length == 0) {
+        if (!this.outputs || this.outputs.length === 0) {
             return null;
         }
 
@@ -2911,7 +2911,7 @@
         }
 
         let output = this.outputs[slot];
-        if (!output || !output.links || output.links.length == 0) {
+        if (!output || !output.links || output.links.length === 0) {
             return null;
         }
 
