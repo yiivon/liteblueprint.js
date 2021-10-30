@@ -5,6 +5,7 @@ function Concentrator() {
     this.addProperty("msg", "");
     this.addInput("log", LiteGraph.EVENT);
     this.addInput("msg", 0);
+    this.addOutput("out", LiteGraph.EVENT);
 }
 
 Concentrator.title = "集线器";
@@ -42,6 +43,12 @@ Concentrator.prototype.onConnectionsChange = function (type,
                                                        link,
                                                        ioSlot) {
     if(type === LiteGraph.OUTPUT) {
+        let target_node = link ? this.graph.getNodeById(link.target_id) : null;
+
+        if (!target_node) {
+            return;
+        }
+
 
     }
 };
