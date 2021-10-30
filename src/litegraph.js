@@ -3262,8 +3262,25 @@
      * remove all existing input slots
      * @method removeAllInputs
      */
-    LiteGraph.prototype.removeAllInputs = function () {
+    LGraphNode.prototype.removeAllInputs = function () {
+        for (let i = 0; i < this.inputs.length; i++) {
+            let slot_info = this.inputs[i];
+            this.disconnectInput(i);
 
+            let link = this.graph.links[slot_info.link];
+            if (!link) {
+                continue;
+            }
+            link.target_slot -= 1;
+
+            if (this.onInputRemoved) {
+                this.onInputRemoved(i, slot_info[0]);
+            }
+        }
+
+        this.inputs = [];
+        this.setSize(this.computeSize());
+        this.setDirtyCanvas(true, true);
     }
 
     /**
@@ -6972,7 +6989,7 @@ LGraphNode.prototype.executeAction = function(action)
                     ctx.lineTo(pos[0] - 5, pos[1] - 5 + 0.5);
                     ctx.lineTo(pos[0], pos[1] - 5 + 0.5);
                     ctx.closePath();
-                }  else if (this.connecting_output.shape === LiteGraph.ARROW_SHAPE) {
+                } else if (this.connecting_output.shape === LiteGraph.ARROW_SHAPE) {
                     ctx.moveTo(this.connecting_pos[0] + 8, this.connecting_pos[1] + 0.5);
                     ctx.lineTo(this.connecting_pos[0] - 4, this.connecting_pos[1] + 6 + 0.5);
                     ctx.lineTo(this.connecting_pos[0] - 4, this.connecting_pos[1] - 6 + 0.5);

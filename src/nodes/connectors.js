@@ -55,10 +55,7 @@ Concentrator.prototype.onConnectionsChange = function (type,
         let scheme = slot.scheme ?? {a: 'string', b: 'number'};
         if(!scheme) return;
 
-        let ii = this.inputs?.length;
-        for(let i=0; i<ii; i++) {
-            this.removeInput(i);
-        }
+        this.removeAllInputs();
 
         for(let p in scheme) {
             if(!scheme.hasOwnProperty(p)) continue;
