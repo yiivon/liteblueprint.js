@@ -55,7 +55,7 @@ Concentrator.prototype.onConnectionsChange = function (type,
         let slot = target_node.getInputInfo(link.target_slot);
         if(!slot) return;
 
-        let scheme = slot.scheme ?? {a: 'string', b: 'number'};
+        let scheme = slot.scheme ?? {};
         if(!scheme) return;
 
         this.removeAllInputs();
