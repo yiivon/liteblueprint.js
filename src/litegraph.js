@@ -11206,7 +11206,7 @@ LGraphNode.prototype.executeAction = function(action)
                     }
                 },
                 {
-                    content: "收起",
+                    content: "折叠/展开",
                     callback: LGraphCanvas.onMenuNodeCollapse
                 },
                 {content: "固定", callback: LGraphCanvas.onMenuNodePin},
@@ -11248,7 +11248,7 @@ LGraphNode.prototype.executeAction = function(action)
 
         if (node.clonable !== false) {
             options.push({
-                content: "Clone",
+                content: "克隆",
                 callback: LGraphCanvas.onMenuNodeClone
             });
         }
@@ -11260,7 +11260,7 @@ LGraphNode.prototype.executeAction = function(action)
             });
 
         options.push(null, {
-            content: "Remove",
+            content: "移除",
             disabled: !(node.removable !== false && !node.block_delete),
             callback: LGraphCanvas.onMenuNodeRemove
         });
@@ -11274,20 +11274,20 @@ LGraphNode.prototype.executeAction = function(action)
 
     LGraphCanvas.prototype.getGroupMenuOptions = function (node) {
         let o = [
-            {content: "Title", callback: LGraphCanvas.onShowPropertyEditor},
+            {content: "标题", callback: LGraphCanvas.onShowPropertyEditor},
             {
-                content: "Color",
+                content: "颜色",
                 has_submenu: true,
                 callback: LGraphCanvas.onMenuNodeColors
             },
             {
-                content: "Font size",
+                content: "字体尺寸",
                 property: "font_size",
                 type: "Number",
                 callback: LGraphCanvas.onShowPropertyEditor
             },
             null,
-            {content: "Remove", callback: LGraphCanvas.onMenuNodeRemove}
+            {content: "移除", callback: LGraphCanvas.onMenuNodeRemove}
         ];
 
         return o;
