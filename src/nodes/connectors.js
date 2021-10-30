@@ -1,10 +1,9 @@
-
 function Concentrator() {
     this.mode = LiteGraph.ON_EVENT;
     this.size = [80, 30];
     //this.addProperty("msg", "");
-    this.addInput("in", LiteGraph.EVENT);
-    this.addOutput("out", LiteGraph.EVENT);
+    this.addInput("in", LiteGraph.ACTION, {label: '执行'});
+    this.addOutput("out", LiteGraph.EVENT, {label: '执行'});
 }
 
 Concentrator.title = "集线器";
@@ -12,7 +11,7 @@ Concentrator.desc = "将多个输入汇集为一束数据通过事件触发传�
 
 Concentrator.prototype.onAction = function (action, param) {
     //console.log(arguments);
-    if(action === 'in')
+    if (action === 'in')
         this.triggerSlot(0, param);
 };
 
@@ -21,8 +20,7 @@ Concentrator.prototype.onExecute = function () {
 };
 
 Concentrator.prototype.onGetInputs = function () {
-    return [
-    ];
+    return [];
 };
 
 Concentrator.prototype.onConnectionsChange = function (type,
@@ -30,11 +28,11 @@ Concentrator.prototype.onConnectionsChange = function (type,
                                                        isConnected,
                                                        link,
                                                        ioSlot) {
-    if(type === LiteGraph.OUTPUT) {
+    if (type === LiteGraph.OUTPUT) {
         let linked_info = this.getOutputLinkedSlots(link.origin_slot) ?? [];
         let scheme = linked_info.reduce((obj, info, i) => {
             let slot = info.slot;
-            if(slot) {
+            if (slot) {
                 Object.assign(obj, slot.scheme ?? {});
             }
             return obj;
@@ -44,12 +42,12 @@ Concentrator.prototype.onConnectionsChange = function (type,
             return slot.type !== LiteGraph.EVENT;
         });
 
-        if(!isConnected) {
+        if (!isConnected) {
             return;
         }
 
-        for(let p in scheme) {
-            if(!scheme.hasOwnProperty(p)) continue;
+        for (let p in scheme) {
+            if (!scheme.hasOwnProperty(p)) continue;
 
             let v = scheme[p];
             v = (typeof v === 'string' ? {type: v} : v);
