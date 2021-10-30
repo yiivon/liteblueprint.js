@@ -3278,6 +3278,11 @@
         this.setDirtyCanvas(true, true);
     }
 
+    /**
+     * remove input(s) by predicate condition
+     * @method removeInputBy
+     * @param {number|function} by_cb is the predicate to remove, can be slot type or a function return true
+     */
     LGraphNode.prototype.removeInputBy = function (by_cb) {
         if (!by_cb) {
             return;
@@ -3300,7 +3305,7 @@
                     }
                 }
             } else if (typeof by_cb === 'function') {
-                if (by_cb(slot_info)) {
+                if (by_cb(slot_info) === true) {
                     this.inputs.slice(i, 1);
                     if (this.onInputRemoved) {
                         this.onInputRemoved(i, slot_info[0]);

@@ -45,7 +45,9 @@ Concentrator.prototype.onConnectionsChange = function (type,
         let scheme = slot.scheme ?? {};
         if(!scheme) return;
 
-        this.removeAllInputs();
+        this.removeInputBy((slot) => {
+            return slot.type !== LiteGraph.EVENT;
+        });
         if(!isConnected) {
             return;
         }
