@@ -2916,11 +2916,11 @@
         }
 
         let r = [];
-        for (var i = 0; i < output.links.length; i++) {
-            var link_id = output.links[i];
-            var link = this.graph.links[link_id];
+        for (let i = 0; i < output.links.length; i++) {
+            let link_id = output.links[i];
+            let link = this.graph.links[link_id];
             if (link) {
-                var target_node = this.graph.getNodeById(link.target_id);
+                let target_node = this.graph.getNodeById(link.target_id);
                 if (target_node) {
                     r.push(target_node);
                 }
