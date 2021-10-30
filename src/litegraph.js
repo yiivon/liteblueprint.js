@@ -9876,7 +9876,7 @@ LGraphNode.prototype.executeAction = function(action)
     LGraphCanvas.prototype.showLinkMenu = function (link, e) {
         let that = this;
         console.log(link);
-        let options = ["Add Node", null, "Delete"];
+        let options = ["放置节点", null, "Delete"];
         let menu = new LiteGraph.ContextMenu(options, {
             event: e,
             title: link.data != null ? link.data.constructor.name : null,
@@ -9885,7 +9885,7 @@ LGraphNode.prototype.executeAction = function(action)
 
         function inner_clicked(v, options, e) {
             switch (v) {
-                case "Add Node":
+                case "放置节点":
                     LGraphCanvas.onMenuAdd(null, null, e, menu, function (node) {
                         console.log("node autoconnect");
                         let node_left = that.graph.getNodeById(link.origin_id);
@@ -11137,11 +11137,11 @@ LGraphNode.prototype.executeAction = function(action)
         } else {
             options = [
                 {
-                    content: "Add Node",
+                    content: "放置节点",
                     has_submenu: true,
                     callback: LGraphCanvas.onMenuAdd
                 },
-                {content: "Add Group", callback: LGraphCanvas.onGroupAdd}
+                {content: "新建节点组", callback: LGraphCanvas.onGroupAdd}
                 //{content:"Collapse All", callback: LGraphCanvas.onMenuCollapseAll }
             ];
 
@@ -11363,7 +11363,7 @@ LGraphNode.prototype.executeAction = function(action)
                 if (group) {
                     //on group
                     menu_info.push(null, {
-                        content: "Edit Group",
+                        content: "编辑节点组",
                         has_submenu: true,
                         submenu: {
                             title: "Group",
