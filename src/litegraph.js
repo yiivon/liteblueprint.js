@@ -3206,39 +3206,46 @@
         }
 
         if (by_cb === true) {
-            return this.removeAllInputs();
+            return this.removeAllOutputs();
         }
 
         // remove
-        let inputs_ = [];
-        for (let i = 0; i < this.inputs.length; i++) {
-            let slot_info = this.inputs[i];
+        let outputs_ = [];
+        for (let i = 0; i < this.outputs.length; i++) {
+            let slot_info = this.outputs[i];
             if (!isNaN(by_cb)) {
                 // number, slot type
                 if (slot_info.type === by_cb) {
-                    if (this.onInputRemoved) {
-                        this.onInputRemoved(i, slot_info[0]);
+                    if (this.onOutputRemoved) {
+                        this.onOutputRemoved(i, slot_info[0]);
                     }
                 } else {
-                    inputs_.push(slot_info);
+                    outputs_.push(slot_info);
                 }
             } else if (typeof by_cb === 'function') {
                 if (by_cb(slot_info) === true) {
-                    if (this.onInputRemoved) {
-                        this.onInputRemoved(i, slot_info[0]);
+                    if (this.onOutputRemoved) {
+                        this.onOutputRemoved(i, slot_info[0]);
                     }
                 } else {
-                    inputs_.push(slot_info);
+                    outputs_.push(slot_info);
                 }
             }
         }
 
-        this.inputs = inputs_;
+        this.outputs = outputs_;
         // update link with the nodes still living
-        for (let i = 0; i < this.inputs.length; i++) {
-            let link = this.graph.links[this.inputs[i].link];
-            if (link) {
-                link.target_slot = i;
+        for (let i = 0; i < this.outputs.length; ++i) {
+            if (!this.outputs[i] || !this.outputs[i].links) {
+                continue;
+            }
+            let links = this.outputs[i].links;
+            for (let j = 0; j < links.length; ++j) {
+                let link = this.graph.links[links[j]];
+                if (!link) {
+                    continue;
+                }
+                link.origin_slot = i;
             }
         }
 
