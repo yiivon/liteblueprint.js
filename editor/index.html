@@ -44,7 +44,15 @@
 <script type="text/javascript" src="js/code.js"></script>
 
 <script>
+let arr = [1,2,3,4,5];
+let arr_ = [...arr];
+for(let i=0; i<arr.length; i++) {
+    let v = arr[i];
+    console.log(v);
+    arr_.splice(i, 1);
+}
 
+console.log(arr_);
 </script>
 
 </body>

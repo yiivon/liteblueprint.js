@@ -3293,28 +3293,30 @@
         }
 
         // remove
+        let inputs_ = [];
         for (let i = 0; i < this.inputs.length; i++) {
             let slot_info = this.inputs[i];
-
             if (!isNaN(by_cb)) {
                 // number, slot type
                 if (slot_info.type === by_cb) {
-                    this.inputs.splice(i, 1);
                     if (this.onInputRemoved) {
                         this.onInputRemoved(i, slot_info[0]);
                     }
+                } else {
+                    inputs_.push(slot_info);
                 }
             } else if (typeof by_cb === 'function') {
                 if (by_cb(slot_info) === true) {
-                    this.inputs.splice(i, 1);
                     if (this.onInputRemoved) {
                         this.onInputRemoved(i, slot_info[0]);
                     }
+                } else {
+                    inputs_.push(slot_info);
                 }
             }
         }
 
-        if (!this.inputs) this.inputs = [];
+        this.inputs = inputs_;
         // update link with the nodes still living
         for (let i = 0; i < this.inputs.length; i++) {
             let link = this.graph.links[this.inputs[i].link];
