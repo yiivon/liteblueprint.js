@@ -3073,7 +3073,7 @@
     ) {
         var o = {name: name, type: type, default_value: default_value};
         if (extra_info) {
-            for (var i in extra_info) {
+            for (let i in extra_info) {
                 o[i] = extra_info[i];
             }
         }
@@ -3100,8 +3100,9 @@
     LGraphNode.prototype.addOutput = function (name, type, extra_info) {
         var o = {name: name, type: type, links: null};
         if (extra_info) {
-            for (var i in extra_info) {
-                o[i] = extra_info[i];
+            for (let i in extra_info) {
+               if(extra_info.hasOwnProperty(i))
+                   o[i] = extra_info[i];
             }
         }
 
@@ -3126,9 +3127,10 @@
         for (var i = 0; i < array.length; ++i) {
             var info = array[i];
             var o = {name: info[0], type: info[1], link: null};
-            if (array[2]) {
-                for (var j in info[2]) {
-                    o[j] = info[2][j];
+            if (info[2]) {
+                for (let j in info[2]) {
+                    if(info[2].hasOwnProperty(j))
+                        o[j] = info[2][j];
                 }
             }
 
