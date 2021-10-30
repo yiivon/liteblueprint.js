@@ -3268,12 +3268,6 @@
             let slot_info = this.inputs[i];
             this.disconnectInput(i);
 
-            let link = this.graph.links[slot_info.link];
-            if (!link) {
-                continue;
-            }
-            link.target_slot -= 1;
-
             if (this.onInputRemoved) {
                 this.onInputRemoved(i, slot_info[0]);
             }
