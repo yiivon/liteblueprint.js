@@ -11343,10 +11343,10 @@ LGraphNode.prototype.executeAction = function(action)
             }
             options.title =
                 (slot.input ? slot.input.type : slot.output.type) || "*";
-            if (slot.input && slot.input.type == LiteGraph.ACTION) {
+            if (slot.input && slot.input.type === LiteGraph.ACTION) {
                 options.title = "Action";
             }
-            if (slot.output && slot.output.type == LiteGraph.EVENT) {
+            if (slot.output && slot.output.type === LiteGraph.EVENT) {
                 options.title = "Event";
             }
         } else {
