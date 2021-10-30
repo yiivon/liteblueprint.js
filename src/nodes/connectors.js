@@ -31,9 +31,9 @@ Concentrator.prototype.onConnectionsChange = function (type,
     if(type === LiteGraph.OUTPUT) {
         // TODO: should be merging all nodes' scheme relate to
         debugger
-        let output_nodes = this.getOutputNodes(link.origin_slot) ?? [];
-        let scheme = output_nodes.reduce((obj, node, i) => {
-            let slot = node.getInputInfo(link.target_slot);
+        let linked_info = this.getOutputLinkedSlots(link.origin_slot) ?? [];
+        let scheme = linked_info.reduce((obj, info, i) => {
+            let slot = info.slot;
             if(slot) {
                 Object.assign(obj, slot.scheme ?? {});
             }
