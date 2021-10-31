@@ -8118,9 +8118,9 @@ LGraphNode.prototype.executeAction = function(action)
         let title_mode = node.constructor.title_mode;
 
         let render_title = true;
-        if (title_mode == LiteGraph.TRANSPARENT_TITLE || title_mode == LiteGraph.NO_TITLE) {
+        if (title_mode === LiteGraph.TRANSPARENT_TITLE || title_mode === LiteGraph.NO_TITLE) {
             render_title = false;
-        } else if (title_mode == LiteGraph.AUTOHIDE_TITLE && mouse_over) {
+        } else if (title_mode === LiteGraph.AUTOHIDE_TITLE && mouse_over) {
             render_title = true;
         }
 
@@ -8136,20 +8136,20 @@ LGraphNode.prototype.executeAction = function(action)
         //if(node.flags.collapsed)
         {
             ctx.beginPath();
-            if (shape == LiteGraph.BOX_SHAPE || low_quality) {
+            if (shape === LiteGraph.BOX_SHAPE || low_quality) {
                 ctx.fillRect(area[0], area[1], area[2], area[3]);
             } else if (
-                shape == LiteGraph.ROUND_SHAPE ||
-                shape == LiteGraph.CARD_SHAPE
+                shape === LiteGraph.ROUND_SHAPE ||
+                shape === LiteGraph.CARD_SHAPE
             ) {
                 ctx.roundRect(
                     area[0],
                     area[1],
                     area[2],
                     area[3],
-                    shape == LiteGraph.CARD_SHAPE ? [this.round_radius, this.round_radius, 0, 0] : [this.round_radius]
+                    shape === LiteGraph.CARD_SHAPE ? [this.round_radius, this.round_radius, 0, 0] : [this.round_radius]
                 );
-            } else if (shape == LiteGraph.CIRCLE_SHAPE) {
+            } else if (shape === LiteGraph.CIRCLE_SHAPE) {
                 ctx.arc(
                     size[0] * 0.5,
                     size[1] * 0.5,
@@ -8174,12 +8174,12 @@ LGraphNode.prototype.executeAction = function(action)
         }
 
         //title bg (remember, it is rendered ABOVE the node)
-        if (render_title || title_mode == LiteGraph.TRANSPARENT_TITLE) {
+        if (render_title || title_mode === LiteGraph.TRANSPARENT_TITLE) {
             //title bar
             if (node.onDrawTitleBar) {
                 node.onDrawTitleBar(ctx, title_height, size, this.ds.scale, fgcolor);
             } else if (
-                title_mode != LiteGraph.TRANSPARENT_TITLE &&
+                title_mode !== LiteGraph.TRANSPARENT_TITLE &&
                 (node.constructor.title_color || this.render_title_colored)
             ) {
                 let title_color = node.constructor.title_color || fgcolor;

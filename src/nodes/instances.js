@@ -104,4 +104,53 @@ MT4Client.prototype.onGetOutputs = function () {
     return [];
 };
 
+
+MT4Client.prototype.onDrawBackground = function(ctx)
+{
+    if(this.flags.collapsed)
+        return;
+
+    ctx.fillStyle = "#af2b2b";
+    ctx.fillRect(0,20,this.size[0],20);
+
+    if(1)
+    {
+        ctx.fillStyle = "#AFB";
+        ctx.beginPath();
+        ctx.moveTo(this.size[0]-20,0);
+        ctx.lineTo(this.size[0]-25,20);
+        ctx.lineTo(this.size[0],20);
+        ctx.lineTo(this.size[0],0);
+        ctx.fill();
+    }
+
+    if(1)
+    {
+        ctx.fillStyle = "#ABF";
+        ctx.beginPath();
+        ctx.moveTo(this.size[0]-40,0);
+        ctx.lineTo(this.size[0]-45,20);
+        ctx.lineTo(this.size[0]-25,20);
+        ctx.lineTo(this.size[0]-20,0);
+        ctx.fill();
+    }
+
+    ctx.strokeStyle = "#721313";
+    ctx.beginPath();
+    ctx.moveTo(0,20);
+    ctx.lineTo(this.size[0]+1,20);
+    ctx.moveTo(this.size[0]-20,0);
+    ctx.lineTo(this.size[0]-25,20);
+    ctx.moveTo(this.size[0]-40,0);
+    ctx.lineTo(this.size[0]-45,20);
+    ctx.stroke();
+
+    if( this.mouseOver )
+    {
+        ctx.fillStyle = "#AAA";
+        ctx.fillText( "Example of helper", 0, this.size[1] + 14 );
+    }
+}
+
+
 LiteGraph.registerNodeType("实例/MT4", MT4Client);
