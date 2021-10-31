@@ -10420,26 +10420,27 @@ LGraphNode.prototype.executeAction = function(action)
             (info.label ? info.label : property) +
             "</span>" +
             input_html +
-            "<button>OK</button>",
+            "<button>确定</button>",
             options
         );
 
+        let input = {};
         if ((type === "enum" || type === "combo") && info.values) {
-            let input = dialog.querySelector("select");
+            input = dialog.querySelector("select");
             input.addEventListener("change", function (e) {
                 setValue(e.target.value);
                 //let index = e.target.value;
                 //setValue( e.options[e.selectedIndex].value );
             });
         } else if (type === "boolean") {
-            let input = dialog.querySelector("input");
+            input = dialog.querySelector("input");
             if (input) {
                 input.addEventListener("click", function (e) {
                     setValue(!!input.checked);
                 });
             }
         } else {
-            let input = dialog.querySelector("input");
+            input = dialog.querySelector("input");
             if (input) {
                 input.addEventListener("blur", function (e) {
                     this.focus();
