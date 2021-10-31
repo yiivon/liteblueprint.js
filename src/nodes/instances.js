@@ -5,10 +5,12 @@ function MT4Client() {
     this.addOutput("tick", LiteGraph.EVENT, {label: '报价'});
     this.addOutput("trade", LiteGraph.EVENT, {label: '交易'});
 
+    this.combo = this.addWidget("combo","Combo", "red", function(v){
+        console.log(v)
+    }, { values:["red","green","blue", {title: 'ttttt'}]} );
+
     this.properties = {
         url: "",
-        room: "lgraph", //allows to filter messages,
-        only_send_changes: true
     };
 
     this._ws = null;
