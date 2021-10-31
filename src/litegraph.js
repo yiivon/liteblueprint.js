@@ -9233,7 +9233,7 @@ LGraphNode.prototype.executeAction = function(action)
                             else
                                 w.value = index;
                         } else { //combo clicked
-                            let text_values = values != values_list ? Object.values(values) : values;
+                            let text_values = values !== values_list ? Object.values(values) : values;
                             let menu = new LiteGraph.ContextMenu(text_values, {
                                     scale: Math.max(1, this.ds.scale),
                                     event: event,
@@ -9245,8 +9245,8 @@ LGraphNode.prototype.executeAction = function(action)
                             function inner_clicked(v, option, event) {
                                 if (values !== values_list)
                                     v = text_values.indexOf(v);
-                                this.value = typeof v === "object" ? v.title : v;
                                 inner_value_change(this, v);
+                                this.value = typeof v === "object" ? v.title : v;
                                 that.dirty_canvas = true;
                                 return false;
                             }
@@ -9263,7 +9263,7 @@ LGraphNode.prototype.executeAction = function(action)
                         }
                     }
 
-                    if (old_value != w.value)
+                    if (old_value !== w.value)
                         setTimeout(
                             function () {
                                 inner_value_change(this, this.value);
@@ -9273,7 +9273,7 @@ LGraphNode.prototype.executeAction = function(action)
                     this.dirty_canvas = true;
                     break;
                 case "toggle":
-                    if (event.type == LiteGraph.pointerevents_method + "down") {
+                    if (event.type === LiteGraph.pointerevents_method + "down") {
                         w.value = !w.value;
                         setTimeout(function () {
                             inner_value_change(w, w.value);
@@ -9282,7 +9282,7 @@ LGraphNode.prototype.executeAction = function(action)
                     break;
                 case "string":
                 case "text":
-                    if (event.type == LiteGraph.pointerevents_method + "down") {
+                    if (event.type === LiteGraph.pointerevents_method + "down") {
                         this.prompt("Value", w.value, function (v) {
                                 this.value = v;
                                 inner_value_change(this, v);
@@ -9298,7 +9298,7 @@ LGraphNode.prototype.executeAction = function(action)
             } //end switch
 
             //value changed
-            if (old_value != w.value) {
+            if (old_value !== w.value) {
                 if (node.onWidgetChanged)
                     node.onWidgetChanged(w.name, w.value, old_value, w);
                 node.graph._version++;
