@@ -9076,7 +9076,7 @@ LGraphNode.prototype.executeAction = function(action)
                                     v = values[w.value];
                             }
                             ctx.fillText(
-                                v,
+                                v?.title ?? v,
                                 widget_width - margin * 2 - 20,
                                 y + H * 0.7
                             );
@@ -9245,8 +9245,9 @@ LGraphNode.prototype.executeAction = function(action)
                             function inner_clicked(v, option, event) {
                                 if (values !== values_list)
                                     v = text_values.indexOf(v);
+                                this.value = v;
                                 inner_value_change(this, v);
-                                this.value = typeof v === "object" ? v.title : v;
+                                //this.value = typeof v === "object" ? v.title : v;
                                 that.dirty_canvas = true;
                                 return false;
                             }
@@ -10405,7 +10406,7 @@ LGraphNode.prototype.executeAction = function(action)
                     "</option>";
             }
             input_html += "</select>";
-        } else if (type == "boolean") {
+        } else if (type === "boolean") {
             input_html =
                 "<input autofocus type='checkbox' class='value' " +
                 (node.properties[property] ? "checked" : "") +
