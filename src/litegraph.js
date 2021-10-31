@@ -9056,7 +9056,7 @@ LGraphNode.prototype.executeAction = function(action)
                         ctx.fillText(w.name, margin * 2 + 5, y + H * 0.7);
                         ctx.fillStyle = text_color;
                         ctx.textAlign = "right";
-                        if (w.type == "number") {
+                        if (w.type === "number") {
                             ctx.fillText(
                                 Number(w.value).toFixed(
                                     w.options.precision !== undefined
@@ -9154,7 +9154,7 @@ LGraphNode.prototype.executeAction = function(action)
             let widget_height = w.computeSize ? w.computeSize(width)[1] : LiteGraph.NODE_WIDGET_HEIGHT;
             let widget_width = w.width || width;
             //outside
-            if (w != active_widget &&
+            if (w !== active_widget &&
                 (x < 6 || x > widget_width - 12 || y < w.last_y || y > w.last_y + widget_height || w.last_y === undefined))
                 continue;
 
@@ -9188,7 +9188,7 @@ LGraphNode.prototype.executeAction = function(action)
                 case "number":
                 case "combo":
                     let old_value = w.value;
-                    if (event.type == LiteGraph.pointerevents_method + "move" && w.type == "number") {
+                    if (event.type === LiteGraph.pointerevents_method + "move" && w.type === "number") {
                         w.value += event.deltaX * 0.1 * (w.options.step || 1);
                         if (w.options.min != null && w.value < w.options.min) {
                             w.value = w.options.min;
@@ -9196,18 +9196,18 @@ LGraphNode.prototype.executeAction = function(action)
                         if (w.options.max != null && w.value > w.options.max) {
                             w.value = w.options.max;
                         }
-                    } else if (event.type == LiteGraph.pointerevents_method + "down") {
+                    } else if (event.type === LiteGraph.pointerevents_method + "down") {
                         let values = w.options.values;
                         if (values && values.constructor === Function) {
                             values = w.options.values(w, node);
                         }
                         let values_list = null;
 
-                        if (w.type != "number")
+                        if (w.type !== "number")
                             values_list = values.constructor === Array ? values : Object.keys(values);
 
                         let delta = x < 40 ? -1 : x > widget_width - 40 ? 1 : 0;
-                        if (w.type == "number") {
+                        if (w.type === "number") {
                             w.value += delta * 0.1 * (w.options.step || 1);
                             if (w.options.min != null && w.value < w.options.min) {
                                 w.value = w.options.min;
@@ -11711,7 +11711,7 @@ LGraphNode.prototype.executeAction = function(action)
         root.addEventListener(
             "contextmenu",
             function (e) {
-                if (e.button != 2) {
+                if (e.button !== 2) {
                     //right button
                     return false;
                 }
@@ -11724,7 +11724,7 @@ LGraphNode.prototype.executeAction = function(action)
         LiteGraph.pointerListenerAdd(root, "down",
             function (e) {
                 //console.log("pointerevents: ContextMenu down");
-                if (e.button == 2) {
+                if (e.button === 2) {
                     that.close();
                     e.preventDefault();
                     return true;
