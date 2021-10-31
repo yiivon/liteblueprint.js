@@ -742,8 +742,8 @@
 
     WidgetPanel.prototype.createGradient = function(ctx) {
         if (
-            this.properties["bgcolorTop"] == "" ||
-            this.properties["bgcolorBottom"] == ""
+            this.properties["bgcolorTop"] === "" ||
+            this.properties["bgcolorBottom"] === ""
         ) {
             this.lineargradient = 0;
             return;
