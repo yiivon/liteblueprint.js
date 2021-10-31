@@ -9243,9 +9243,9 @@ LGraphNode.prototype.executeAction = function(action)
                                 ref_window);
 
                             function inner_clicked(v, option, event) {
-                                if (values != values_list)
+                                if (values !== values_list)
                                     v = text_values.indexOf(v);
-                                this.value = v;
+                                this.value = typeof v === "object" ? v.title : v;
                                 inner_value_change(this, v);
                                 that.dirty_canvas = true;
                                 return false;
@@ -9254,7 +9254,7 @@ LGraphNode.prototype.executeAction = function(action)
                     } //end mousedown
                     else if (event.type === LiteGraph.pointerevents_method + "up" && w.type === "number") {
                         let delta = x < 40 ? -1 : x > widget_width - 40 ? 1 : 0;
-                        if (event.click_time < 200 && delta == 0) {
+                        if (event.click_time < 200 && delta === 0) {
                             this.prompt("Value", w.value, function (v) {
                                     this.value = Number(v);
                                     inner_value_change(this, this.value);

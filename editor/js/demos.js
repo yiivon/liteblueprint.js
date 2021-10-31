@@ -92,7 +92,9 @@ function TestWidgetsNode()
 	this.number = this.addWidget("number","Number", 0.5, function(v){
 		console.log(v)
 	}, { min: 0, max: 100} );
-	this.combo = this.addWidget("combo","Combo", "red", function(v){}, { values:["red","green","blue", {title: 'ttttt'}]} );
+	this.combo = this.addWidget("combo","Combo", "red", function(v){
+		console.log(v)
+	}, { values:["red","green","blue", {title: 'ttttt'}]} );
 	this.text = this.addWidget("text","Text", "edit me", function(v){
 		console.log(v)
 	}, {} );
