@@ -3588,7 +3588,7 @@
             info = {};
         if (!info.type)
             info.type = typeof this.properties[property];
-        if (info.widget == "combo")
+        if (info.widget === "combo")
             info.type = "enum";
 
         return info;
