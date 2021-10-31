@@ -5,7 +5,7 @@ function MT4Client() {
     this.addOutput("tick", LiteGraph.EVENT, {label: '报价'});
     this.addOutput("trade", LiteGraph.EVENT, {label: '交易'});
 
-    this.combo = this.addWidget("combo","Combo", "red", function(v){
+    this.combo = this.addWidget("combo","帐户选择", "red", function(v){
         console.log(v)
     }, { values:["red","green","blue", {title: 'ttttt'}]} );
 
