@@ -8,7 +8,7 @@ function MT4Client() {
     this.separator = this.addWidget("separator", "", "", null, {});
     this.cmb_account = this.addWidget("combo", "帐户选择", "", function (v) {
         console.log(v);
-        if(v) {
+        if (v) {
             this.register(v);
         }
     }.bind(this), {values: []});
@@ -69,13 +69,31 @@ MT4Client.prototype.initSocket = function () {
         console.log('disconnect');
     });
 
+    const ontradingevent = function (type, trade) {
+
+    };
+
+    socket.on('ontradeclose', function (trade) {
+        ontradingevent('close', trade);
+    });
+
+    socket.on('ontradeopen', function (trade) {
+        ontradingevent('open', trade);
+    });
+
+    socket.on('ontrademodify', function (trade) {
+        ontradingevent('modify', trade);
+    });
+
     return socket;
 };
 
 MT4Client.prototype.register = function (iid) {
-    if(this._io) {
+    let that = this;
+    if (this._io) {
         this._io.emit('register', {iid, type: 'c'}, function (msg) {
             console.log(msg);
+            that.boxcolor = "#6C6";
         });
     }
 };
