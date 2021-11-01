@@ -6,7 +6,7 @@ function MT4Client() {
     this.addOutput("trade", LiteGraph.EVENT, {label: '交易'});
 
     this.separator = this.addWidget("separator", "", "", null, {});
-    this.cmb_account = this.addWidget("combo", "帐户选择", "red", function (v) {
+    this.cmb_account = this.addWidget("combo", "帐户选择", "", function (v) {
         console.log(v)
     }, {values: []});
 
@@ -57,6 +57,7 @@ MT4Client.prototype.initSocket = function () {
                     }
                     return v;
                 });
+                that.cmb_account.value = '';
             }
         });
     });
