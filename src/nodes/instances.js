@@ -5,10 +5,10 @@ function MT4Client() {
     this.addOutput("tick", LiteGraph.EVENT, {label: '报价'});
     this.addOutput("trade", LiteGraph.EVENT, {label: '交易'});
 
-    this.separator = this.addWidget("separator","", "", null, {} );
-    this.combo = this.addWidget("combo","帐户选择", "red", function(v){
+    this.separator = this.addWidget("separator", "", "", null, {});
+    this.cmb_account = this.addWidget("combo", "帐户选择", "red", function (v) {
         console.log(v)
-    }, { values:["red","green","blue", {title: 'ttttt'}]} );
+    }, {values: []});
 
     this.properties = {
         url: "",
@@ -38,13 +38,27 @@ MT4Client.prototype.onExecute = function () {
 
 MT4Client.prototype.onRemoved = function () {
     console.log('onRemoved')
+    if (this._io) this._io.disconnect();
 }
 
 MT4Client.prototype.initSocket = function () {
     let socket = io('ws://127.0.0.1:8896');
 
+    let that = this;
     socket.on('connect', function () {
         console.log('connect');
+        // retrieve mt4 srv instances from server
+        socket.emit('get-instances', {type: 'b'}, function (dat) {
+            console.log(dat);
+            if (dat?.status === 'success') {
+                that.cmb_account.options.values = dat.instances.map((v) => {
+                    if (typeof v === 'string') {
+                        return {id: v, title: v};
+                    }
+                    return v;
+                });
+            }
+        });
     });
 
     socket.on('disconnect', function () {
