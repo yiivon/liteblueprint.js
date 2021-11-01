@@ -31,7 +31,7 @@ MT4Client.desc = "MT4终端实例，可接收报价交易事件并能进行实�
 
 MT4Client.prototype.onPropertyChanged = function (name, value) {
     if (name === "url") {
-        this.connectSocket();
+        //this.connectSocket();
     }
 };
 
