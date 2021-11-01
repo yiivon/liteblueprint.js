@@ -5,9 +5,7 @@ function MT4Client() {
     this.addOutput("tick", LiteGraph.EVENT, {label: '报价'});
     this.addOutput("trade", LiteGraph.EVENT, {label: '交易'});
 
-    this.separator = this.addWidget("separator","", "", function(v){
-    }, {} );
-
+    this.separator = this.addWidget("separator","", "", null, {} );
     this.combo = this.addWidget("combo","帐户选择", "red", function(v){
         console.log(v)
     }, { values:["red","green","blue", {title: 'ttttt'}]} );
@@ -20,6 +18,7 @@ function MT4Client() {
     this._last_sent_data = [];
     this._last_received_data = [];
 
+    this._io = this.initSocket();
     this.size = this.computeSize();
     this.serialize_widgets = true;
 }
@@ -36,6 +35,24 @@ MT4Client.prototype.onPropertyChanged = function (name, value) {
 MT4Client.prototype.onExecute = function () {
 
 };
+
+MT4Client.prototype.onRemoved = function () {
+    console.log('onRemoved')
+}
+
+MT4Client.prototype.initSocket = function () {
+    let socket = io('ws://127.0.0.1:8896');
+
+    socket.on('connect', function () {
+        console.log('connect');
+    });
+
+    socket.on('disconnect', function () {
+        console.log('disconnect');
+    });
+
+    return socket;
+}
 
 MT4Client.prototype.connectSocket = function () {
     let that = this;
