@@ -502,7 +502,7 @@
     WidgetSliderGUI.title = "Inner Slider";
 
     WidgetSliderGUI.prototype.onPropertyChanged = function(name, value) {
-        if (name == "value") {
+        if (name === "value") {
             this.slider.value = value;
         }
     };
@@ -598,6 +598,23 @@
 
     LiteGraph.registerNodeType("widget/hslider", WidgetHSlider);
 
+    // Separator
+    function Separator() {
+        this.size = [100, 26];
+        this.properties = { min: 0, max: 1, value: 0, color: "#1212e3" };
+    }
+
+    Separator.title = "Separator";
+    Separator.desc = "separate displaying";
+    Separator.prototype.onDrawForeground = function(ctx) {
+        //border
+        ctx.lineWidth = 1;
+        ctx.fillStyle = this.properties.color;
+        ctx.fillRect(2, 2, (this.size[0] - 4) , this.size[1] - 4);
+    };
+
+    LiteGraph.registerNodeType("widget/separator", Separator);
+
     function WidgetProgress() {
         this.size = [160, 26];
         this.addInput("", "number");
@@ -609,7 +626,7 @@
 
     WidgetProgress.prototype.onExecute = function() {
         var v = this.getInputData(0);
-        if (v != undefined) {
+        if (v !== undefined) {
             this.properties["value"] = v;
         }
     };
@@ -618,7 +635,7 @@
         //border
         ctx.lineWidth = 1;
         ctx.fillStyle = this.properties.color;
-        var v =
+        let v =
             (this.properties.value - this.properties.min) /
             (this.properties.max - this.properties.min);
         v = Math.min(1, v);

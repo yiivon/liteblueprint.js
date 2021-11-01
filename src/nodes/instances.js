@@ -5,6 +5,9 @@ function MT4Client() {
     this.addOutput("tick", LiteGraph.EVENT, {label: '报价'});
     this.addOutput("trade", LiteGraph.EVENT, {label: '交易'});
 
+    this.separator = this.addWidget("separator","", "", function(v){
+    }, {} );
+
     this.combo = this.addWidget("combo","帐户选择", "red", function(v){
         console.log(v)
     }, { values:["red","green","blue", {title: 'ttttt'}]} );
@@ -16,6 +19,9 @@ function MT4Client() {
     this._ws = null;
     this._last_sent_data = [];
     this._last_received_data = [];
+
+    this.size = this.computeSize();
+    this.serialize_widgets = true;
 }
 
 MT4Client.title = "MT4实例";
@@ -103,54 +109,6 @@ MT4Client.prototype.onGetInputs = function () {
 MT4Client.prototype.onGetOutputs = function () {
     return [];
 };
-
-
-MT4Client.prototype.onDrawBackground = function(ctx)
-{
-    if(this.flags.collapsed)
-        return;
-
-    ctx.fillStyle = "#af2b2b";
-    ctx.fillRect(0,20,this.size[0],20);
-
-    if(1)
-    {
-        ctx.fillStyle = "#AFB";
-        ctx.beginPath();
-        ctx.moveTo(this.size[0]-20,0);
-        ctx.lineTo(this.size[0]-25,20);
-        ctx.lineTo(this.size[0],20);
-        ctx.lineTo(this.size[0],0);
-        ctx.fill();
-    }
-
-    if(1)
-    {
-        ctx.fillStyle = "#ABF";
-        ctx.beginPath();
-        ctx.moveTo(this.size[0]-40,0);
-        ctx.lineTo(this.size[0]-45,20);
-        ctx.lineTo(this.size[0]-25,20);
-        ctx.lineTo(this.size[0]-20,0);
-        ctx.fill();
-    }
-
-    ctx.strokeStyle = "#721313";
-    ctx.beginPath();
-    ctx.moveTo(0,20);
-    ctx.lineTo(this.size[0]+1,20);
-    ctx.moveTo(this.size[0]-20,0);
-    ctx.lineTo(this.size[0]-25,20);
-    ctx.moveTo(this.size[0]-40,0);
-    ctx.lineTo(this.size[0]-45,20);
-    ctx.stroke();
-
-    if( this.mouseOver )
-    {
-        ctx.fillStyle = "#AAA";
-        ctx.fillText( "Example of helper", 0, this.size[1] + 14 );
-    }
-}
 
 
 LiteGraph.registerNodeType("实例/MT4", MT4Client);
