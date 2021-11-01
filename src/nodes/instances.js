@@ -39,6 +39,26 @@ MT4Client.prototype.onExecute = function () {
 
 };
 
+MT4Client.prototype.onConnectionsChange = function (type,
+                                                    slotIndex,
+                                                    isConnected,
+                                                    link,
+                                                    ioSlot) {
+    if (type === LiteGraph.OUTPUT) {
+        if (ioSlot?.name === 'tick') {
+            if (isConnected) {
+                this._io.emit('subscribe_tick', true, function (msg) {
+                    console.log(msg);
+                });
+            } else {
+                this._io.emit('subscribe_tick', false, function (msg) {
+                    console.log(msg);
+                });
+            }
+        }
+    }
+};
+
 MT4Client.prototype.onRemoved = function () {
     console.log('onRemoved')
     if (this._io) this._io.disconnect();
@@ -70,7 +90,7 @@ MT4Client.prototype.initSocket = function () {
     });
 
     const ontradingevent = function (type, trade) {
-
+        console.log(arguments);
     };
 
     socket.on('ontradeclose', function (trade) {
@@ -83,6 +103,10 @@ MT4Client.prototype.initSocket = function () {
 
     socket.on('ontrademodify', function (trade) {
         ontradingevent('modify', trade);
+    });
+
+    socket.on('ontick', function (tick) {
+        console.log(tick);
     });
 
     return socket;
