@@ -7,8 +7,11 @@ function MT4Client() {
 
     this.separator = this.addWidget("separator", "", "", null, {});
     this.cmb_account = this.addWidget("combo", "帐户选择", "", function (v) {
-        console.log(v)
-    }, {values: []});
+        console.log(v);
+        if(v) {
+            this.register(v);
+        }
+    }.bind(this), {values: []});
 
     this.properties = {
         url: "",
@@ -67,7 +70,15 @@ MT4Client.prototype.initSocket = function () {
     });
 
     return socket;
-}
+};
+
+MT4Client.prototype.register = function (iid) {
+    if(this._io) {
+        this._io.emit('register', {iid, type: 'c'}, function (msg) {
+            console.log(msg);
+        });
+    }
+};
 
 MT4Client.prototype.connectSocket = function () {
     let that = this;
