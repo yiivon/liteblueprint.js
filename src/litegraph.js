@@ -524,7 +524,7 @@
                 !type_a || //generic output
                 !type_b || //generic input
                 type_a == type_b || //same type (is valid for triggers)
-                (type_a == LiteGraph.EVENT && type_b == LiteGraph.ACTION)
+                (type_a === LiteGraph.EVENT && type_b === LiteGraph.ACTION)
             ) {
                 return true;
             }
@@ -536,7 +536,7 @@
             type_b = type_b.toLowerCase();
 
             // For nodes supporting multiple connection types
-            if (type_a.indexOf(",") == -1 && type_b.indexOf(",") == -1) {
+            if (type_a.indexOf(",") === -1 && type_b.indexOf(",") === -1) {
                 return type_a == type_b;
             }
 
@@ -586,20 +586,20 @@
 
             type = type || "text";
             if (url.constructor === String) {
-                if (url.substr(0, 4) == "http" && LiteGraph.proxy) {
+                if (url.substr(0, 4) === "http" && LiteGraph.proxy) {
                     url = LiteGraph.proxy + url.substr(url.indexOf(":") + 3);
                 }
                 return fetch(url)
                     .then(function (response) {
                         if (!response.ok)
                             throw new Error("File not found"); //it will be catch below
-                        if (type == "arraybuffer")
+                        if (type === "arraybuffer")
                             return response.arrayBuffer();
-                        else if (type == "text" || type == "string")
+                        else if (type === "text" || type === "string")
                             return response.text();
-                        else if (type == "json")
+                        else if (type === "json")
                             return response.json();
-                        else if (type == "blob")
+                        else if (type === "blob")
                             return response.blob();
                     })
                     .then(function (data) {
@@ -948,7 +948,7 @@
 
         let now = LiteGraph.getTime();
         let elapsed = now - start;
-        if (elapsed == 0) {
+        if (elapsed === 0) {
             elapsed = 1;
         }
         this.execution_time = 0.001 * elapsed;
@@ -1018,7 +1018,7 @@
         }
 
         while (true) {
-            if (S.length == 0) {
+            if (S.length === 0) {
                 break;
             }
 
@@ -1137,7 +1137,7 @@
 
             for (let i = 0; i < current.inputs.length; ++i) {
                 let input = current.getInputNode(i);
-                if (input && ancestors.indexOf(input) == -1) {
+                if (input && ancestors.indexOf(input) === -1) {
                     pending.push(input);
                 }
             }
@@ -1240,7 +1240,7 @@
 
             if (
                 node.constructor === LiteGraph.Subgraph &&
-                eventname != "onExecute"
+                eventname !== "onExecute"
             ) {
                 if (node.mode == mode) {
                     node.sendEventToAllNodes(eventname, params, mode);
@@ -1351,7 +1351,7 @@
     LGraph.prototype.remove = function (node) {
         if (node.constructor === LiteGraph.LGraphGroup) {
             let index = this._groups.indexOf(node);
-            if (index != -1) {
+            if (index !== -1) {
                 this._groups.splice(index, 1);
             }
             node.graph = null;
@@ -1416,7 +1416,7 @@
 
         //remove from containers
         let pos = this._nodes.indexOf(node);
-        if (pos != -1) {
+        if (pos !== -1) {
             this._nodes.splice(pos, 1);
         }
         delete this._nodes_by_id[node.id];
@@ -1491,7 +1491,7 @@
      */
     LGraph.prototype.findNodeByTitle = function (title) {
         for (let i = 0, l = this._nodes.length; i < l; ++i) {
-            if (this._nodes[i].title == title) {
+            if (this._nodes[i].title === title) {
                 return this._nodes[i];
             }
         }
@@ -1507,7 +1507,7 @@
     LGraph.prototype.findNodesByTitle = function (title) {
         let result = [];
         for (let i = 0, l = this._nodes.length; i < l; ++i) {
-            if (this._nodes[i].title == title) {
+            if (this._nodes[i].title === title) {
                 result.push(this._nodes[i]);
             }
         }
@@ -1832,7 +1832,7 @@
 
         if (
             this.outputs[name].type &&
-            String(this.outputs[name].type).toLowerCase() ==
+            String(this.outputs[name].type).toLowerCase() ===
             String(type).toLowerCase()
         ) {
             return;
@@ -2448,7 +2448,7 @@
             o.outputs = this.outputs;
         }
 
-        if (this.title && this.title != this.constructor.title) {
+        if (this.title && this.title !== this.constructor.title) {
             o.title = this.title;
         }
 
@@ -2817,7 +2817,7 @@
 
         for (let i = 0, l = this.inputs.length; i < l; ++i) {
             let input_info = this.inputs[i];
-            if (name == input_info.name && input_info.link != null) {
+            if (name === input_info.name && input_info.link != null) {
                 let link = this.graph.links[input_info.link];
                 if (link) {
                     return link.data;
@@ -3783,7 +3783,7 @@
             return -1;
         }
         for (let i = 0, l = this.inputs.length; i < l; ++i) {
-            if (name == this.inputs[i].name) {
+            if (name === this.inputs[i].name) {
                 return i;
             }
         }
@@ -4679,18 +4679,18 @@ LGraphNode.prototype.executeAction = function(action)
                     this.mouseDrag(deltax, deltay);
                 }
             }
-        } else if (e.type == LiteGraph.pointerevents_method + "up") {
+        } else if (e.type === LiteGraph.pointerevents_method + "up") {
             this.dragging = false;
             LiteGraph.pointerListenerRemove(document, "move", this._binded_mouse_callback);
             LiteGraph.pointerListenerRemove(document, "up", this._binded_mouse_callback);
             LiteGraph.pointerListenerAdd(canvas, "move", this._binded_mouse_callback);
         } else if (is_inside &&
-            (e.type == "mousewheel" ||
-                e.type == "wheel" ||
-                e.type == "DOMMouseScroll")
+            (e.type === "mousewheel" ||
+                e.type === "wheel" ||
+                e.type === "DOMMouseScroll")
         ) {
             e.eventType = "mousewheel";
-            if (e.type == "wheel") {
+            if (e.type === "wheel") {
                 e.wheel = -e.deltaY;
             } else {
                 e.wheel =
@@ -5728,9 +5728,9 @@ LGraphNode.prototype.executeAction = function(action)
         //this is to ensure to defocus(blur) if a text input element is on focus
         if (
             !ref_window.document.activeElement ||
-            (ref_window.document.activeElement.nodeName.toLowerCase() !=
+            (ref_window.document.activeElement.nodeName.toLowerCase() !==
                 "input" &&
-                ref_window.document.activeElement.nodeName.toLowerCase() !=
+                ref_window.document.activeElement.nodeName.toLowerCase() !==
                 "textarea")
         ) {
             e.preventDefault();
@@ -6356,11 +6356,11 @@ LGraphNode.prototype.executeAction = function(action)
         let block_default = false;
         //console.log(e); //debug
 
-        if (e.target.localName == "input") {
+        if (e.target.localName === "input") {
             return;
         }
 
-        if (e.type == "keydown") {
+        if (e.type === "keydown") {
             if (e.keyCode == 32) {
                 //esc
                 this.dragging_canvas = true;
@@ -6368,12 +6368,12 @@ LGraphNode.prototype.executeAction = function(action)
             }
 
             //select all Control A
-            if (e.keyCode == 65 && e.ctrlKey) {
+            if (e.keyCode === 65 && e.ctrlKey) {
                 this.selectNodes();
                 block_default = true;
             }
 
-            if (e.code == "KeyC" && (e.metaKey || e.ctrlKey) && !e.shiftKey) {
+            if (e.code === "KeyC" && (e.metaKey || e.ctrlKey) && !e.shiftKey) {
                 //copy
                 if (this.selected_nodes) {
                     this.copyToClipboard();
@@ -6381,16 +6381,16 @@ LGraphNode.prototype.executeAction = function(action)
                 }
             }
 
-            if (e.code == "KeyV" && (e.metaKey || e.ctrlKey) && !e.shiftKey) {
+            if (e.code === "KeyV" && (e.metaKey || e.ctrlKey) && !e.shiftKey) {
                 //paste
                 this.pasteFromClipboard();
             }
 
             //delete or backspace
-            if (e.keyCode == 46 || e.keyCode == 8) {
+            if (e.keyCode === 46 || e.keyCode === 8) {
                 if (
-                    e.target.localName != "input" &&
-                    e.target.localName != "textarea"
+                    e.target.localName !== "input" &&
+                    e.target.localName !== "textarea"
                 ) {
                     this.deleteSelectedNodes();
                     block_default = true;
@@ -6408,8 +6408,8 @@ LGraphNode.prototype.executeAction = function(action)
                     }
                 }
             }
-        } else if (e.type == "keyup") {
-            if (e.keyCode == 32) {
+        } else if (e.type === "keyup") {
+            if (e.keyCode === 32) {
                 this.dragging_canvas = false;
             }
 
@@ -6579,7 +6579,7 @@ LGraphNode.prototype.executeAction = function(action)
                         let type = file.type.split("/")[0];
                         if (type === "text" || type === "") {
                             reader.readAsText(file);
-                        } else if (type == "image") {
+                        } else if (type === "image") {
                             reader.readAsDataURL(file);
                         } else {
                             reader.readAsArrayBuffer(file);
@@ -8203,9 +8203,9 @@ LGraphNode.prototype.executeAction = function(action)
 
                 //ctx.globalAlpha = 0.5 * old_alpha;
                 ctx.beginPath();
-                if (shape == LiteGraph.BOX_SHAPE || low_quality) {
+                if (shape === LiteGraph.BOX_SHAPE || low_quality) {
                     ctx.rect(0, -title_height, size[0] + 1, title_height);
-                } else if (shape == LiteGraph.ROUND_SHAPE || shape == LiteGraph.CARD_SHAPE) {
+                } else if (shape === LiteGraph.ROUND_SHAPE || shape === LiteGraph.CARD_SHAPE) {
                     ctx.roundRect(
                         0,
                         -title_height,
@@ -8223,9 +8223,9 @@ LGraphNode.prototype.executeAction = function(action)
             if (node.onDrawTitleBox) {
                 node.onDrawTitleBox(ctx, title_height, size, this.ds.scale);
             } else if (
-                shape == LiteGraph.ROUND_SHAPE ||
-                shape == LiteGraph.CIRCLE_SHAPE ||
-                shape == LiteGraph.CARD_SHAPE
+                shape === LiteGraph.ROUND_SHAPE ||
+                shape === LiteGraph.CIRCLE_SHAPE ||
+                shape === LiteGraph.CARD_SHAPE
             ) {
                 if (low_quality) {
                     ctx.fillStyle = "black";
@@ -8322,7 +8322,7 @@ LGraphNode.prototype.executeAction = function(action)
                 let x = node.size[0] - w;
                 let over = LiteGraph.isInsideRectangle(this.graph_mouse[0] - node.pos[0], this.graph_mouse[1] - node.pos[1], x + 2, -w + 2, w - 4, w - 4);
                 ctx.fillStyle = over ? "#888" : "#555";
-                if (shape == LiteGraph.BOX_SHAPE || low_quality)
+                if (shape === LiteGraph.BOX_SHAPE || low_quality)
                     ctx.fillRect(x + 2, -w + 2, w - 4, w - 4);
                 else {
                     ctx.beginPath();
@@ -8349,14 +8349,14 @@ LGraphNode.prototype.executeAction = function(action)
                 node.onBounding(area);
             }
 
-            if (title_mode == LiteGraph.TRANSPARENT_TITLE) {
+            if (title_mode === LiteGraph.TRANSPARENT_TITLE) {
                 area[1] -= title_height;
                 area[3] += title_height;
             }
             ctx.lineWidth = 1;
             ctx.globalAlpha = 0.8;
             ctx.beginPath();
-            if (shape == LiteGraph.BOX_SHAPE) {
+            if (shape === LiteGraph.BOX_SHAPE) {
                 ctx.rect(
                     -6 + area[0],
                     -6 + area[1],
@@ -8364,8 +8364,8 @@ LGraphNode.prototype.executeAction = function(action)
                     12 + area[3]
                 );
             } else if (
-                shape == LiteGraph.ROUND_SHAPE ||
-                (shape == LiteGraph.CARD_SHAPE && node.flags.collapsed)
+                shape === LiteGraph.ROUND_SHAPE ||
+                (shape === LiteGraph.CARD_SHAPE && node.flags.collapsed)
             ) {
                 ctx.roundRect(
                     -6 + area[0],
@@ -8382,7 +8382,7 @@ LGraphNode.prototype.executeAction = function(action)
                     12 + area[3],
                     [this.round_radius * 2, 2, this.round_radius * 2, 2]
                 );
-            } else if (shape == LiteGraph.CIRCLE_SHAPE) {
+            } else if (shape === LiteGraph.CIRCLE_SHAPE) {
                 ctx.arc(
                     size[0] * 0.5,
                     size[1] * 0.5,
@@ -10790,7 +10790,7 @@ LGraphNode.prototype.executeAction = function(action)
                 textarea.value = node.properties[propname];
                 textarea.addEventListener("keydown", function (e) {
                     //console.log(e);
-                    if (e.code == "Enter" && e.ctrlKey) {
+                    if (e.code === "Enter" && e.ctrlKey) {
                         console.log("Assigned");
                         node.setProperty(propname, textarea.value);
                     }
@@ -11606,7 +11606,7 @@ LGraphNode.prototype.executeAction = function(action)
     //	format of a hex triplet - the kind we use for HTML colours. The function
     //	will return an array with three values.
     function hex2num(hex) {
-        if (hex.charAt(0) == "#") {
+        if (hex.charAt(0) === "#") {
             hex = hex.slice(1);
         } //Remove the '#' char - if there is one.
         hex = hex.toUpperCase();
@@ -12308,7 +12308,7 @@ LGraphNode.prototype.executeAction = function(action)
             case "cancel":
             case "gotpointercapture":
             case "lostpointercapture": {
-                if (LiteGraph.pointerevents_method != "mouse") {
+                if (LiteGraph.pointerevents_method !== "mouse") {
                     return oDOM.addEventListener(LiteGraph.pointerevents_method + sEvent, fCall, capture);
                 }
             }
