@@ -90,7 +90,7 @@ MT4Client.prototype.initSocket = function () {
     });
 
     const ontradingevent = function (type, trade) {
-        console.log(arguments);
+        that.triggerSlot(1, {type, trade});
     };
 
     socket.on('ontradeclose', function (trade) {
@@ -106,7 +106,7 @@ MT4Client.prototype.initSocket = function () {
     });
 
     socket.on('ontick', function (tick) {
-        console.log(tick);
+        that.triggerSlot(0, tick);
     });
 
     return socket;
