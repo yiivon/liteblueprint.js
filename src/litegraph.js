@@ -9113,6 +9113,13 @@ LGraphNode.prototype.executeAction = function(action)
                         ctx.restore();
                     }
                     break;
+                case "separator":
+                    //border
+                    ctx.lineWidth = 0;
+                    ctx.fillStyle = '#545554';
+                    ctx.beginPath();
+                    ctx.fillRect(margin, posY + margin / 2, widget_width - margin*2, 1);
+                    break;
                 default:
                     if (w.draw) {
                         w.draw(ctx, node, widget_width, y, H);

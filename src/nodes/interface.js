@@ -598,23 +598,6 @@
 
     LiteGraph.registerNodeType("widget/hslider", WidgetHSlider);
 
-    // Separator
-    function Separator() {
-        this.size = [100, 26];
-        this.properties = { min: 0, max: 1, value: 0, color: "#1212e3" };
-    }
-
-    Separator.title = "Separator";
-    Separator.desc = "separate displaying";
-    Separator.prototype.onDrawForeground = function(ctx) {
-        //border
-        ctx.lineWidth = 1;
-        ctx.fillStyle = this.properties.color;
-        ctx.fillRect(2, 2, (this.size[0] - 4) , this.size[1] - 4);
-    };
-
-    LiteGraph.registerNodeType("widget/separator", Separator);
-
     function WidgetProgress() {
         this.size = [160, 26];
         this.addInput("", "number");
