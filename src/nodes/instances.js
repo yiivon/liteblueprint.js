@@ -47,11 +47,11 @@ MT4Client.prototype.onConnectionsChange = function (type,
     if (type === LiteGraph.OUTPUT) {
         if (ioSlot?.name === 'tick') {
             if (isConnected) {
-                this._io.emit('subscribe_tick', true, function (msg) {
+                this._io.emit('subscribe-tick', true, function (msg) {
                     console.log(msg);
                 });
             } else {
-                this._io.emit('subscribe_tick', false, function (msg) {
+                this._io.emit('subscribe-tick', false, function (msg) {
                     console.log(msg);
                 });
             }
