@@ -103,7 +103,17 @@ Distributor.prototype.onConnectionsChange = function (type,
 
 Distributor.prototype.onAction = function (action, param) {
     if (action === 'in') {
-        debugger
+
+        for (let i in this.outputs) {
+            debugger
+            let s = this.outputs[i];
+            if (s?.type !== LiteGraph.EVENT) {
+                if (s.links && s.name) {
+                    this.setOutputData(i, param?.[s.name]);
+                }
+            }
+        }
+
         this.triggerSlot(0, param);
     }
 };
