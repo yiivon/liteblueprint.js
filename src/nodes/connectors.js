@@ -2,8 +2,8 @@ function Concentrator() {
     this.mode = LiteGraph.ON_EVENT;
     this.size = [80, 30];
     //this.addProperty("msg", "");
-    this.addInput("in", LiteGraph.ACTION, {label: '执行'});
-    this.addOutput("out", LiteGraph.EVENT, {label: '执行'});
+    this.addInput("in", LiteGraph.ACTION, {label: '输入'});
+    this.addOutput("out", LiteGraph.EVENT, {label: '输出'});
 }
 
 Concentrator.title = "集线器";
