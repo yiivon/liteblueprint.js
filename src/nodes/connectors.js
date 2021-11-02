@@ -79,7 +79,7 @@ Distributor.prototype.onConnectionsChange = function (type,
     if (type === LiteGraph.INPUT) {
         if (ioSlot?.name === 'in') {
             let linked_info = this.getInputLinkedSlot(link.target_slot);
-            let schema = linked_info?.schema ?? {};
+            let schema = linked_info?.slot?.schema ?? {};
 
             this.removeOutputBy((slot) => {
                 return slot.type !== LiteGraph.EVENT;
@@ -95,7 +95,7 @@ Distributor.prototype.onConnectionsChange = function (type,
 
                 let v = schema[p];
                 v = (typeof v === 'string' ? {type: v} : v);
-                this.addOutput(p, v.type);
+                this.addOutput(p, v.type, v);
             }
         }
     }
