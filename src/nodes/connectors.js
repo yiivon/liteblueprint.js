@@ -15,8 +15,10 @@ Concentrator.prototype.onAction = function (action, param) {
         this.triggerSlot(0, param);
 };
 
-Concentrator.prototype.onExecute = function () {
+Concentrator.prototype.onConfigure = function (cfg) {
+};
 
+Concentrator.prototype.onSerialize = function (cfg) {
 };
 
 Concentrator.prototype.onGetInputs = function () {
@@ -29,7 +31,7 @@ Concentrator.prototype.onConnectionsChange = function (type,
                                                        link,
                                                        ioSlot) {
     if (type === LiteGraph.OUTPUT) {
-        if(ioSlot?.name === 'out' && link) {
+        if(ioSlot?.name === 'out' && link && !this.is_unserialize) {
             let linked_info = this.getOutputLinkedSlots(link.origin_slot) ?? [];
             let schema = linked_info.reduce((obj, info, i) => {
                 let slot = info.slot;
@@ -79,7 +81,7 @@ Distributor.prototype.onConnectionsChange = function (type,
                                                       link,
                                                       ioSlot) {
     if (type === LiteGraph.INPUT) {
-        if (ioSlot?.name === 'in' && link) {
+        if (ioSlot?.name === 'in' && link && !this.is_unserialize) {
             let linked_info = this.getInputLinkedSlot(link.target_slot);
             let schema = linked_info?.slot?.schema ?? {};
 

@@ -2319,6 +2319,8 @@
      * @method configure
      */
     LGraphNode.prototype.configure = function (info) {
+        this.is_unserialize = true;     // indicating this node instancing from configuration
+
         if (this.graph) {
             this.graph._version++;
         }
@@ -2336,7 +2338,7 @@
 
             if (info[j] == null) {
                 continue;
-            } else if (typeof info[j] == "object") {
+            } else if (typeof info[j] === "object") {
                 //object
                 if (this[j] && this[j].configure) {
                     this[j].configure(info[j]);
