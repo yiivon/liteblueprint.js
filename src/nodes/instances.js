@@ -11,7 +11,25 @@ function MT4Client() {
             bid: {type: 'float', label: '卖价'}
         }
     });
-    this.addOutput("trade", LiteGraph.EVENT, {label: '交易'});
+    this.addOutput("trade", LiteGraph.EVENT, {
+        label: '交易', schema: {
+            id: {type: 'number', label: 'ID'},
+            type: {type: 'string', label: '类型'},
+            symbol: {type: 'string', label: '商品'},
+            volume: {type: 'number', label: '手数'},
+            open_time: {type: 'number', label: '开仓时间'},
+            open_price: {type: 'float', label: '开仓价'},
+            stop_loss: {type: 'float', label: '止损价'},
+            take_profit: {type: 'float', label: '获利价'},
+            close_time: {type: 'number', label: '平仓时间'},
+            expiration: {type: 'number', label: '超时'},
+            reason: {type: 'number', label: '原因'},
+            close_price: {type: 'float', label: '平仓价'},
+            profit: {type: 'float', label: '盈利'},
+            magic: {type: 'number', label: 'Magic'},
+            comment: {type: 'string', label: '备注'}
+        }
+    });
 
     let that = this;
     this.separator = this.addWidget("separator", "", "", null, {});
