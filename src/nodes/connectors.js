@@ -101,5 +101,12 @@ Distributor.prototype.onConnectionsChange = function (type,
     }
 };
 
+Distributor.prototype.onAction = function (action, param) {
+    if (action === 'in') {
+        debugger
+        this.triggerSlot(0, param);
+    }
+};
+
 LiteGraph.registerNodeType("连接件/分线器", Distributor);
 
