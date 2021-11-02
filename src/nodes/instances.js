@@ -159,7 +159,8 @@ MT4Client.prototype.initSocket = function () {
     });
 
     socket.on('ontick', function (tick) {
-        that.triggerSlot(0, tick);
+        //tick = [symbol_id, symbol_name, ts, bid, ask];
+        that.triggerSlot(0, {id: tick[0], symbol: tick[1], ts: tick[2], bid: tick[3], ask: tick[4]});
     });
 
     return socket;
