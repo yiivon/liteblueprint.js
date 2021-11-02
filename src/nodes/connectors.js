@@ -30,10 +30,10 @@ Concentrator.prototype.onConnectionsChange = function (type,
                                                        ioSlot) {
     if (type === LiteGraph.OUTPUT) {
         let linked_info = this.getOutputLinkedSlots(link.origin_slot) ?? [];
-        let scheme = linked_info.reduce((obj, info, i) => {
+        let schema = linked_info.reduce((obj, info, i) => {
             let slot = info.slot;
             if (slot) {
-                Object.assign(obj, slot.scheme ?? {});
+                Object.assign(obj, slot.schema ?? {});
             }
             return obj;
         }, {});
@@ -46,10 +46,10 @@ Concentrator.prototype.onConnectionsChange = function (type,
             return;
         }
 
-        for (let p in scheme) {
-            if (!scheme.hasOwnProperty(p)) continue;
+        for (let p in schema) {
+            if (!schema.hasOwnProperty(p)) continue;
 
-            let v = scheme[p];
+            let v = schema[p];
             v = (typeof v === 'string' ? {type: v} : v);
             this.addInput(p, v.type);
         }
@@ -78,7 +78,7 @@ Distributor.prototype.onConnectionsChange = function (type,
                                                       ioSlot) {
     if (type === LiteGraph.INPUT) {
         if (ioSlot?.name === 'in') {
-            let scheme = ioSlot?.scheme ?? {};
+            let schema = ioSlot?.schema ?? {};
 
             this.removeOutputBy((slot) => {
                 return slot.type !== LiteGraph.EVENT;
@@ -88,11 +88,11 @@ Distributor.prototype.onConnectionsChange = function (type,
                 return;
             }
 
-            for (let p in scheme) {
-                if (!scheme.hasOwnProperty(p))
+            for (let p in schema) {
+                if (!schema.hasOwnProperty(p))
                     continue;
 
-                let v = scheme[p];
+                let v = schema[p];
                 v = (typeof v === 'string' ? {type: v} : v);
                 this.addOutput(p, v.type);
             }

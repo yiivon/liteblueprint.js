@@ -2,7 +2,7 @@ function MT4Client() {
     this.size = [60, 20];
     this.addInput("stop", LiteGraph.ACTION, {label: '停止'});
     this.addInput("trade", LiteGraph.ACTION, {label: '交易'});
-    this.addOutput("tick", LiteGraph.EVENT, {label: '报价'});
+    this.addOutput("tick", LiteGraph.EVENT, {label: '报价', schema: {}});
     this.addOutput("trade", LiteGraph.EVENT, {label: '交易'});
 
     let that = this;
