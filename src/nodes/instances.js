@@ -1,7 +1,18 @@
 function MT4Client() {
     this.size = [60, 20];
     this.addInput("stop", LiteGraph.ACTION, {label: '停止'});
-    this.addInput("trade", LiteGraph.ACTION, {label: '交易'});
+    this.addInput("trade", LiteGraph.ACTION, {
+        label: '交易',
+        type: {type: 'string', label: '类型'},
+        symbol: {type: 'string', label: '商品'},
+        volume: {type: 'number', label: '手数'},
+        open_price: {type: 'float', label: '开仓价'},
+        stop_loss: {type: 'float', label: '止损价'},
+        take_profit: {type: 'float', label: '获利价'},
+        expiration: {type: 'number', label: '超时'},
+        magic: {type: 'number', label: 'Magic'},
+        comment: {type: 'string', label: '备注'}
+    });
     this.addOutput("tick", LiteGraph.EVENT, {
         label: '报价',
         schema: {
