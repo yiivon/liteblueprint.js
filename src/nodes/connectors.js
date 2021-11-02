@@ -52,7 +52,7 @@ Concentrator.prototype.onConnectionsChange = function (type,
 
                 let v = schema[p];
                 v = (typeof v === 'string' ? {type: v} : v);
-                this.addInput(p, v.type);
+                this.addOutput(p, v.type, v);
             }
         }
     }
