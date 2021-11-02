@@ -7723,11 +7723,11 @@ LGraphNode.prototype.executeAction = function(action)
             //Start clipping
             ctx.save();
             ctx.beginPath();
-            if (shape == LiteGraph.BOX_SHAPE) {
+            if (shape === LiteGraph.BOX_SHAPE) {
                 ctx.rect(0, 0, size[0], size[1]);
-            } else if (shape == LiteGraph.ROUND_SHAPE) {
+            } else if (shape === LiteGraph.ROUND_SHAPE) {
                 ctx.roundRect(0, 0, size[0], size[1], [10]);
-            } else if (shape == LiteGraph.CIRCLE_SHAPE) {
+            } else if (shape === LiteGraph.CIRCLE_SHAPE) {
                 ctx.arc(
                     size[0] * 0.5,
                     size[1] * 0.5,
@@ -7843,7 +7843,11 @@ LGraphNode.prototype.executeAction = function(action)
                         let text = slot.label != null ? slot.label : slot.name;
                         if (text) {
                             ctx.fillStyle = LiteGraph.NODE_TEXT_COLOR;
-                            if (horizontal || slot.dir == LiteGraph.UP) {
+                            if(slot.type !== LiteGraph.EVENT) {
+                                ctx.font =  "normal " + LiteGraph.NODE_SUBTEXT_SIZE-2 + "px Arial";
+                            }
+
+                            if (horizontal || slot.dir === LiteGraph.UP) {
                                 ctx.fillText(text, pos[0], pos[1] - 10);
                             } else {
                                 ctx.fillText(text, pos[0] + 10, pos[1] + 5);
