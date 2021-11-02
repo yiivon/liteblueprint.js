@@ -5,8 +5,16 @@ function MT4Client() {
     this.addOutput("tick", LiteGraph.EVENT, {label: '报价'});
     this.addOutput("trade", LiteGraph.EVENT, {label: '交易'});
 
+    let that = this;
     this.separator = this.addWidget("separator", "", "", null, {});
     this.cmb_account = this.addWidget("combo", "帐户选择", "", this.onAccountChange.bind(this), {values: []});
+    this.button = this.addWidget("button","开关", null, function(v){
+        if(that._io.connected) {
+            that.stop();
+        } else {
+            that.start();
+        }
+    } , {} );
 
     this.properties = {
         url: "",
@@ -76,7 +84,12 @@ MT4Client.prototype.onAccountChange = function (v) {
 };
 
 MT4Client.prototype.start = function () {
-    this._send_data_cache = [];
+    if (this._io) {
+        this._io.emit('subscribe-tick', !!this.getOutputNodes(0), function (msg) {
+            console.log(msg);
+        });
+    }
+
     this._io = this.initSocket();
 };
 
@@ -118,6 +131,7 @@ MT4Client.prototype.initSocket = function () {
 
     socket.on('disconnect', function () {
         console.log('disconnect');
+        that.boxcolor = LiteGraph.NODE_DEFAULT_BOXCOLOR;
     });
 
     const ontradingevent = function (type, trade) {
@@ -148,6 +162,7 @@ MT4Client.prototype.register = function (iid) {
     if (this._io) {
         this._io.emit('register', {iid, type: 'c'}, function (msg) {
             console.log(msg);
+            that._account_default = iid;
             that.boxcolor = "#6C6";
             do {
                 let argvs = that._send_data_cache.shift();
@@ -169,12 +184,6 @@ MT4Client.prototype.onAction = function (action, param) {
         if (param) this.stop();
         else {
             // is tick event connected?
-            if (this._io) {
-                this._io.emit('subscribe-tick', !!this.getOutputNodes(0), function (msg) {
-                    console.log(msg);
-                });
-            }
-
             this.start();
         }
     }
