@@ -61,6 +61,10 @@ MT4Client.prototype.onRemoved = function () {
     if (this._io) this._io.disconnect();
 };
 
+MT4Client.prototype.onConfigure = function (cfg) {
+
+};
+
 MT4Client.prototype.onAccountChange = function (v) {
     if(v) {
         this.register(v);
