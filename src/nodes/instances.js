@@ -174,7 +174,7 @@ MT4Client.prototype.initSocket = function () {
     });
 
     const ontradingevent = function (type, trade) {
-        that.triggerSlot(1, {type, trade});
+        that.triggerSlot(1, {...trade, action: type});
     };
 
     socket.on('ontradeclose', function (trade) {
