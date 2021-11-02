@@ -9900,8 +9900,7 @@ LGraphNode.prototype.executeAction = function(action)
 
     LGraphCanvas.prototype.showLinkMenu = function (link, e) {
         let that = this;
-        console.log(link);
-        let options = ["放置节点", null, "Delete"];
+        let options = ["放置节点", null, "删除连接"];
         let menu = new LiteGraph.ContextMenu(options, {
             event: e,
             title: link.data != null ? link.data.constructor.name : null,
@@ -9917,14 +9916,14 @@ LGraphNode.prototype.executeAction = function(action)
                         let node_right = that.graph.getNodeById(link.target_id);
                         if (!node.inputs || !node.inputs.length || !node.outputs || !node.outputs.length)
                             return;
-                        if (node_left.outputs[link.origin_slot].type == node.inputs[0].type && node.outputs[0].type == node_right.inputs[0].type) {
+                        if (node_left.outputs[link.origin_slot].type === node.inputs[0].type && node.outputs[0].type === node_right.inputs[0].type) {
                             node_left.connect(link.origin_slot, node, 0);
                             node.connect(0, node_right, link.target_slot);
                             node.pos[0] -= node.size[0] * 0.5;
                         }
                     });
                     break;
-                case "Delete":
+                case "删除连接":
                     that.graph.removeLink(link.id);
                     break;
                 default:
