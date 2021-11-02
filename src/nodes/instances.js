@@ -15,8 +15,10 @@ function MT4Client() {
     this._account_list = null;
     this._account_default = '';
     this._send_data_cache = [];
+    this._io = null;
 
-    this._io = this.initSocket();
+    this.start();
+
     this.size = this.computeSize();
     this.serialize_widgets = true;
 }
@@ -71,6 +73,15 @@ MT4Client.prototype.onAccountChange = function (v) {
     if (v) {
         this.register(v);
     }
+};
+
+MT4Client.prototype.start = function () {
+    this._send_data_cache = [];
+    this._io = this.initSocket();
+};
+
+MT4Client.prototype.stop = function () {
+    if (this._io) this._io.disconnect();
 };
 
 MT4Client.prototype.initSocket = function () {
@@ -147,10 +158,6 @@ MT4Client.prototype.register = function (iid) {
     }
 };
 
-MT4Client.prototype.stop = function () {
-    if (this._io) this._io.disconnect();
-};
-
 MT4Client.prototype.send = function (data) {
 
 };
@@ -159,7 +166,17 @@ MT4Client.prototype.onAction = function (action, param) {
     if (action === 'trade') {
 
     } else if (action === 'stop') {
-        if(param) this.stop();
+        if (param) this.stop();
+        else {
+            // is tick event connected?
+            if (this._io) {
+                this._io.emit('subscribe-tick', !!this.getOutputNodes(0), function (msg) {
+                    console.log(msg);
+                });
+            }
+
+            this.start();
+        }
     }
 };
 
