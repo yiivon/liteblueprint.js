@@ -2,19 +2,27 @@ function MT4Client() {
     this.size = [60, 20];
     this.addInput("stop", LiteGraph.ACTION, {label: '停止'});
     this.addInput("trade", LiteGraph.ACTION, {label: '交易'});
-    this.addOutput("tick", LiteGraph.EVENT, {label: '报价', schema: {ts: {type: 'number', label: '时间戳'}, symbol: 'string', ask: 'float', bid: 'float'}});
+    this.addOutput("tick", LiteGraph.EVENT, {
+        label: '报价',
+        schema: {
+            ts: {type: 'number', label: '时间戳'},
+            symbol: {type: 'string', label: '商品'},
+            ask: {type: 'float', label: '买价'},
+            bid: {type: 'float', label: '卖价'}
+        }
+    });
     this.addOutput("trade", LiteGraph.EVENT, {label: '交易'});
 
     let that = this;
     this.separator = this.addWidget("separator", "", "", null, {});
     this.cmb_account = this.addWidget("combo", "帐户选择", "", this.onAccountChange.bind(this), {values: []});
-    this.button = this.addWidget("button","开关", null, function(v){
-        if(that._io.connected) {
+    this.button = this.addWidget("button", "开关", null, function (v) {
+        if (that._io.connected) {
             that.stop();
         } else {
             that.start();
         }
-    } , {} );
+    }, {});
 
     this.properties = {
         url: "",
