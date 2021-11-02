@@ -7844,7 +7844,7 @@ LGraphNode.prototype.executeAction = function(action)
                         if (text) {
                             ctx.fillStyle = LiteGraph.NODE_TEXT_COLOR;
                             if(slot.type !== LiteGraph.EVENT) {
-                                ctx.font =  "normal " + LiteGraph.NODE_SUBTEXT_SIZE-2 + "px Arial";
+                                ctx.font = LiteGraph.NODE_SUBTEXT_SIZE-2 + "px Arial";
                             }
                             if (horizontal || slot.dir === LiteGraph.UP) {
                                 ctx.fillText(text, pos[0], pos[1] - 10);
@@ -7935,7 +7935,7 @@ LGraphNode.prototype.executeAction = function(action)
                         if (text) {
                             ctx.fillStyle = LiteGraph.NODE_TEXT_COLOR;
                             if(slot.type !== LiteGraph.EVENT) {
-                                ctx.font =  "normal " + LiteGraph.NODE_SUBTEXT_SIZE-2 + "px Arial";
+                                ctx.font = LiteGraph.NODE_SUBTEXT_SIZE-2 + "px Arial";
                             }
                             if (horizontal || slot.dir === LiteGraph.DOWN) {
                                 ctx.fillText(text, pos[0], pos[1] - 8);
