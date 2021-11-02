@@ -62,13 +62,43 @@ LiteGraph.registerNodeType("连接件/集线器", Concentrator);
 function Distributor() {
     this.mode = LiteGraph.ON_EVENT;
     this.size = [80, 30];
-    this.addProperty("msg", "");
-    this.addInput("in", LiteGraph.EVENT);
-    this.addOutput("out", LiteGraph.EVENT);
+    //this.addProperty("msg", "");
+    this.addInput("in", LiteGraph.ACTION, {label: '输入'});
+    this.addOutput("out", LiteGraph.EVENT, {label: '输出'});
 }
 
 Distributor.title = "分线器";
 Distributor.desc = "将触发事件附带的数据分解为多个输出。";
+
+
+Distributor.prototype.onConnectionsChange = function (type,
+                                                      slotIndex,
+                                                      isConnected,
+                                                      link,
+                                                      ioSlot) {
+    if (type === LiteGraph.INPUT) {
+        if (ioSlot?.name === 'in') {
+            let scheme = ioSlot?.scheme ?? {};
+
+            this.removeOutputBy((slot) => {
+                return slot.type !== LiteGraph.EVENT;
+            });
+
+            if (!isConnected) {
+                return;
+            }
+
+            for (let p in scheme) {
+                if (!scheme.hasOwnProperty(p))
+                    continue;
+
+                let v = scheme[p];
+                v = (typeof v === 'string' ? {type: v} : v);
+                this.addInput(p, v.type);
+            }
+        }
+    }
+};
 
 LiteGraph.registerNodeType("连接件/分线器", Distributor);
 
