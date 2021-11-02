@@ -2787,6 +2787,16 @@
      * @return {LGraphNode} node or null
      */
     LGraphNode.prototype.getInputNode = function (slot) {
+
+    };
+
+    /**
+     * retrieves all the node,slot linked to this input slot
+     * @method getInputLinkedSlot
+     * @param {number} slot
+     * @return {object} {node, slot}
+     */
+    LGraphNode.prototype.getInputLinkedSlot = function (slot) {
         if (!this.inputs) {
             return null;
         }
@@ -2801,8 +2811,9 @@
         if (!link_info) {
             return null;
         }
-        return this.graph.getNodeById(link_info.origin_id);
-    };
+        let node = this.graph.getNodeById(link_info.origin_id);
+        return {node, slot: node.getOutputInfo(link_info.origin_slot)};
+    }
 
     /**
      * returns the value of an input with this name, otherwise checks if there is a property with that name
@@ -9118,7 +9129,7 @@ LGraphNode.prototype.executeAction = function(action)
                     ctx.lineWidth = 0;
                     ctx.fillStyle = '#545554';
                     ctx.beginPath();
-                    ctx.fillRect(margin, posY + margin / 2, widget_width - margin*2, 1);
+                    ctx.fillRect(margin, posY + margin / 2, widget_width - margin * 2, 1);
                     break;
                 default:
                     if (w.draw) {

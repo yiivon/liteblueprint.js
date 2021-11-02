@@ -78,6 +78,8 @@ Distributor.prototype.onConnectionsChange = function (type,
                                                       ioSlot) {
     if (type === LiteGraph.INPUT) {
         if (ioSlot?.name === 'in') {
+            let linked_info = this.getInputLinkedSlot(link.target_slot);
+            debugger
             let schema = ioSlot?.schema ?? {};
 
             this.removeOutputBy((slot) => {
