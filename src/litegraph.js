@@ -2591,7 +2591,7 @@
         //if(slot && slot.constructor === String)
         //	slot = this.findOutputSlot(slot);
 
-        if (slot == -1 || slot >= this.outputs.length) {
+        if (slot === -1 || slot >= this.outputs.length) {
             return;
         }
 
