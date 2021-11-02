@@ -14,6 +14,7 @@ function MT4Client() {
 
     this._account_list = null;
     this._account_default = '';
+    this._send_data_cache = [];
 
     this._io = this.initSocket();
     this.size = this.computeSize();
@@ -67,7 +68,7 @@ MT4Client.prototype.onSerialize = function (cfg) {
 };
 
 MT4Client.prototype.onAccountChange = function (v) {
-    if(v) {
+    if (v) {
         this.register(v);
     }
 };
@@ -76,6 +77,16 @@ MT4Client.prototype.initSocket = function () {
     let socket = io('ws://127.0.0.1:8896');
 
     let that = this;
+
+    let emit = socket.emit;
+    socket.emit = function () {
+        if (!this.connected) {
+            that._send_data_cache.push(arguments);
+        } else {
+            emit.apply(this, arguments);
+        }
+    };
+
     socket.on('connect', function () {
         console.log('connect');
         // retrieve mt4 srv instances from server
@@ -89,6 +100,7 @@ MT4Client.prototype.initSocket = function () {
                     return v;
                 });
                 that.cmb_account.value = that._account_default;
+                that.onAccountChange(that._account_default);
             }
         });
     });
@@ -126,8 +138,17 @@ MT4Client.prototype.register = function (iid) {
         this._io.emit('register', {iid, type: 'c'}, function (msg) {
             console.log(msg);
             that.boxcolor = "#6C6";
+            do {
+                let argvs = that._send_data_cache.shift();
+                if (!argvs) break;
+                that._io.emit(...argvs);
+            } while (true);
         });
     }
+};
+
+MT4Client.prototype.stop = function () {
+
 };
 
 MT4Client.prototype.send = function (data) {
@@ -135,9 +156,9 @@ MT4Client.prototype.send = function (data) {
 };
 
 MT4Client.prototype.onAction = function (action, param) {
-    if(action === 'trade') {
+    if (action === 'trade') {
 
-    } else if(action === 'stop') {
+    } else if (action === 'stop') {
 
     }
 };
