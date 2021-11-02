@@ -29,29 +29,31 @@ Concentrator.prototype.onConnectionsChange = function (type,
                                                        link,
                                                        ioSlot) {
     if (type === LiteGraph.OUTPUT) {
-        let linked_info = this.getOutputLinkedSlots(link.origin_slot) ?? [];
-        let schema = linked_info.reduce((obj, info, i) => {
-            let slot = info.slot;
-            if (slot) {
-                Object.assign(obj, slot.schema ?? {});
+        if(ioSlot?.name === 'out' && link) {
+            let linked_info = this.getOutputLinkedSlots(link.target_slot) ?? [];
+            let schema = linked_info.reduce((obj, info, i) => {
+                let slot = info.slot;
+                if (slot) {
+                    Object.assign(obj, slot.schema ?? {});
+                }
+                return obj;
+            }, {});
+
+            this.removeInputBy((slot) => {
+                return slot.type !== LiteGraph.EVENT;
+            });
+
+            if (!isConnected) {
+                return;
             }
-            return obj;
-        }, {});
 
-        this.removeInputBy((slot) => {
-            return slot.type !== LiteGraph.EVENT;
-        });
+            for (let p in schema) {
+                if (!schema.hasOwnProperty(p)) continue;
 
-        if (!isConnected) {
-            return;
-        }
-
-        for (let p in schema) {
-            if (!schema.hasOwnProperty(p)) continue;
-
-            let v = schema[p];
-            v = (typeof v === 'string' ? {type: v} : v);
-            this.addInput(p, v.type);
+                let v = schema[p];
+                v = (typeof v === 'string' ? {type: v} : v);
+                this.addInput(p, v.type);
+            }
         }
     }
 };
