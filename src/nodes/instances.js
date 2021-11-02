@@ -16,8 +16,6 @@ function MT4Client() {
     this._last_sent_data = [];
     this._last_received_data = [];
 
-    this.boxcolor = LiteGraph.NODE_DEFAULT_BOXCOLOR;
-
     this._io = this.initSocket();
     this.size = this.computeSize();
     this.serialize_widgets = true;
@@ -63,6 +61,10 @@ MT4Client.prototype.onRemoved = function () {
 
 MT4Client.prototype.onConfigure = function (cfg) {
 
+};
+
+MT4Client.prototype.onSerialize = function (cfg) {
+    delete cfg.boxcolor;
 };
 
 MT4Client.prototype.onAccountChange = function (v) {
