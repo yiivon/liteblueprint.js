@@ -6,12 +6,7 @@ function MT4Client() {
     this.addOutput("trade", LiteGraph.EVENT, {label: '交易'});
 
     this.separator = this.addWidget("separator", "", "", null, {});
-    this.cmb_account = this.addWidget("combo", "帐户选择", "", function (v) {
-        console.log(v);
-        if (v) {
-            this.register(v);
-        }
-    }.bind(this), {values: []});
+    this.cmb_account = this.addWidget("combo", "帐户选择", "", this.onAccountChange.bind(this), {values: []});
 
     this.properties = {
         url: "",
@@ -20,6 +15,8 @@ function MT4Client() {
     this._ws = null;
     this._last_sent_data = [];
     this._last_received_data = [];
+
+    this.boxcolor = LiteGraph.NODE_DEFAULT_BOXCOLOR;
 
     this._io = this.initSocket();
     this.size = this.computeSize();
@@ -62,7 +59,13 @@ MT4Client.prototype.onConnectionsChange = function (type,
 MT4Client.prototype.onRemoved = function () {
     console.log('onRemoved')
     if (this._io) this._io.disconnect();
-}
+};
+
+MT4Client.prototype.onAccountChange = function (v) {
+    if(v) {
+        this.register(v);
+    }
+};
 
 MT4Client.prototype.initSocket = function () {
     let socket = io('ws://127.0.0.1:8896');
@@ -120,52 +123,6 @@ MT4Client.prototype.register = function (iid) {
             that.boxcolor = "#6C6";
         });
     }
-};
-
-MT4Client.prototype.connectSocket = function () {
-    let that = this;
-    let url = this.properties.url;
-    if (url.substr(0, 2) !== "ws") {
-        url = "ws://" + url;
-    }
-    this._ws = new WebSocket(url);
-    this._ws.onopen = function () {
-        console.log("ready");
-        that.boxcolor = "#6C6";
-    };
-    this._ws.onmessage = function (e) {
-        that.boxcolor = "#AFA";
-        let data = JSON.parse(e.data);
-        if (data.room && data.room !== that.properties.room) {
-            return;
-        }
-        if (data.type === 1) {
-            if (
-                data.data.object_class &&
-                LiteGraph[data.data.object_class]
-            ) {
-                let obj = null;
-                try {
-                    obj = new LiteGraph[data.data.object_class](data.data);
-                    that.triggerSlot(0, obj);
-                } catch (err) {
-                    return;
-                }
-            } else {
-                that.triggerSlot(0, data.data);
-            }
-        } else {
-            that._last_received_data[data.channel || 0] = data.data;
-        }
-    };
-    this._ws.onerror = function (e) {
-        console.log("couldnt connect to websocket");
-        that.boxcolor = "#E88";
-    };
-    this._ws.onclose = function (e) {
-        console.log("connection closed");
-        that.boxcolor = "#000";
-    };
 };
 
 MT4Client.prototype.send = function (data) {
