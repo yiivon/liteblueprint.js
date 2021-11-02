@@ -11,8 +11,19 @@ Concentrator.desc = "将多个输入汇集为一束数据通过事件触发传�
 
 Concentrator.prototype.onAction = function (action, param) {
     //console.log(arguments);
-    if (action === 'in')
+    if (action === 'in') {
+        for (let i in this.inputs) {
+            if (!this.inputs.hasOwnProperty(i)) continue;
+            let s = this.inputs[i];
+
+            if (s.type !== LiteGraph.ACTION && s.links !== null) {
+                let v = this.getInputData(i);
+                param = {...param, [s.name]: v};
+            }
+        }
+
         this.triggerSlot(0, param);
+    }
 };
 
 Concentrator.prototype.onConfigure = function (cfg) {
@@ -31,7 +42,7 @@ Concentrator.prototype.onConnectionsChange = function (type,
                                                        link,
                                                        ioSlot) {
     if (type === LiteGraph.OUTPUT) {
-        if(ioSlot?.name === 'out' && link && !this.is_unserialize) {
+        if (ioSlot?.name === 'out' && link && !this.is_unserialize) {
             let linked_info = this.getOutputLinkedSlots(link.origin_slot) ?? [];
             let schema = linked_info.reduce((obj, info, i) => {
                 let slot = info.slot;
