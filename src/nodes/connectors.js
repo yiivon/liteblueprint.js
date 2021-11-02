@@ -30,7 +30,7 @@ Concentrator.prototype.onConnectionsChange = function (type,
                                                        ioSlot) {
     if (type === LiteGraph.OUTPUT) {
         if(ioSlot?.name === 'out' && link) {
-            let linked_info = this.getOutputLinkedSlots(link.target_slot) ?? [];
+            let linked_info = this.getOutputLinkedSlots(link.origin_slot) ?? [];
             let schema = linked_info.reduce((obj, info, i) => {
                 let slot = info.slot;
                 if (slot) {
