@@ -206,7 +206,7 @@ MT4Client.prototype.send = function (data) {
 
 MT4Client.prototype.onAction = function (action, param) {
     if (action === 'trade') {
-
+        console.log(arguments)
     } else if (action === 'stop') {
         if (param) this.stop();
         else {
