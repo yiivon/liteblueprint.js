@@ -8002,11 +8002,11 @@ LGraphNode.prototype.executeAction = function(action)
                 ctx.fillStyle = "#686";
                 ctx.beginPath();
                 if (
-                    slot.type === LiteGraph.EVENT ||
-                    slot.shape === LiteGraph.BOX_SHAPE
+                    input_slot.type === LiteGraph.EVENT ||
+                    input_slot.shape === LiteGraph.BOX_SHAPE
                 ) {
                     ctx.rect(x - 7 + 0.5, y - 4, 14, 8);
-                } else if (slot.shape === LiteGraph.ARROW_SHAPE) {
+                } else if (input_slot.shape === LiteGraph.ARROW_SHAPE) {
                     ctx.moveTo(x + 8, y);
                     ctx.lineTo(x + -4, y - 4);
                     ctx.lineTo(x + -4, y + 4);
@@ -8028,11 +8028,11 @@ LGraphNode.prototype.executeAction = function(action)
                 ctx.strokeStyle = "black";
                 ctx.beginPath();
                 if (
-                    slot.type === LiteGraph.EVENT ||
-                    slot.shape === LiteGraph.BOX_SHAPE
+                    output_slot.type === LiteGraph.EVENT ||
+                    output_slot.shape === LiteGraph.BOX_SHAPE
                 ) {
                     ctx.rect(x - 7 + 0.5, y - 4, 14, 8);
-                } else if (slot.shape === LiteGraph.ARROW_SHAPE) {
+                } else if (output_slot.shape === LiteGraph.ARROW_SHAPE) {
                     ctx.moveTo(x + 6, y);
                     ctx.lineTo(x - 6, y - 4);
                     ctx.lineTo(x - 6, y + 4);
