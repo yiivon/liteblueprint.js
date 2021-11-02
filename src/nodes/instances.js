@@ -56,7 +56,7 @@ MT4Client.prototype.onConnectionsChange = function (type,
 
 MT4Client.prototype.onRemoved = function () {
     console.log('onRemoved')
-    if (this._io) this._io.disconnect();
+    this.stop();
 };
 
 MT4Client.prototype.onConfigure = function (cfg) {
@@ -148,7 +148,7 @@ MT4Client.prototype.register = function (iid) {
 };
 
 MT4Client.prototype.stop = function () {
-
+    if (this._io) this._io.disconnect();
 };
 
 MT4Client.prototype.send = function (data) {
@@ -159,7 +159,7 @@ MT4Client.prototype.onAction = function (action, param) {
     if (action === 'trade') {
 
     } else if (action === 'stop') {
-
+        if(param) this.stop();
     }
 };
 
