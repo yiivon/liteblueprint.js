@@ -213,13 +213,45 @@ MT4Client.prototype.register = function (iid) {
     }
 };
 
+MT4Client.prototype.trade = function (param) {
+    if (param.action === 'open') {
+        /*
+            symbol: symbol[1],
+            volume: 50,
+            type: 'buy',
+            open_price: 1.2222,
+            stop_loss: 1.1111,
+            take_profit: 1.3333,
+            deviation: 10,
+            magic: 1111,
+            expiration: 1624323223,
+            comment: 'from eee'
+        * */
+
+        if (!param.symbol || !param.volume || !param.type) {
+            console.error('trade open error - less param');
+            return;
+        }
+
+        this._io.emit('action', param);
+    } else if (param.action === 'modify') {
+
+    } else if (param.action === 'close') {
+        if(!param.id) {
+            console.error('trade close error - less param');
+            return;
+        }
+
+        this._io.emit('action', param);
+    }
+};
+
 MT4Client.prototype.onAction = function (action, param) {
     if (action === 'trade') {
-        console.log(arguments)
+        this.trade(param);
     } else if (action === 'stop') {
         if (param) this.stop();
         else {
-            // is tick event connected?
             this.start();
         }
     }
