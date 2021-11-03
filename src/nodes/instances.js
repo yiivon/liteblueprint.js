@@ -232,7 +232,9 @@ MT4Client.prototype.trade = function (param) {
             return;
         }
 
-        this._io.emit('action', {action: 'trade', data: param});
+        this._io.emit('action', {action: 'trade', data: param}, (msg) => {
+            console.log(msg);
+        });
     } else if (param.action === 'modify') {
 
     } else if (param.action === 'close') {
@@ -241,7 +243,9 @@ MT4Client.prototype.trade = function (param) {
             return;
         }
 
-        this._io.emit('action', {action: 'trade', data: param});
+        this._io.emit('action', {action: 'trade', data: param}, (msg) => {
+            console.log(msg);
+        });
     }
 };
 
