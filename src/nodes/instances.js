@@ -213,10 +213,6 @@ MT4Client.prototype.register = function (iid) {
     }
 };
 
-MT4Client.prototype.send = function (data) {
-
-};
-
 MT4Client.prototype.onAction = function (action, param) {
     if (action === 'trade') {
         console.log(arguments)
