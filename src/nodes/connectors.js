@@ -16,7 +16,7 @@ Concentrator.prototype.onAction = function (action, param) {
             if (!this.inputs.hasOwnProperty(i)) continue;
             let s = this.inputs[i];
 
-            if (s.type !== LiteGraph.ACTION && s.links !== null) {
+            if (s.type !== LiteGraph.ACTION && s.link !== null) {
                 let v = this.getInputData(i);
                 param = {...param, [s.name]: v};
             }
@@ -121,7 +121,7 @@ Distributor.prototype.onAction = function (action, param) {
         for (let i in this.outputs) {
             let s = this.outputs[i];
             if (s?.type !== LiteGraph.EVENT) {
-                if (s.links && s.name) {
+                if (s.links && (s.links.length > 0) && s.name) {
                     this.setOutputData(i, param?.[s.name]);
                 }
             }
