@@ -94,7 +94,7 @@ function TestWidgetsNode()
 	}, { min: 0, max: 100} );
 	this.combo = this.addWidget("combo","Combo", "red", function(v){
 		console.log(v)
-	}, { values:["red","green","blue", {title: 'ttttt'}]} );
+	}, { values:["red","green","blue", {title: 'ttttt', id: 1111}]} );
 	this.text = this.addWidget("text","Text", "edit me", function(v){
 		console.log(v)
 	}, {} );
