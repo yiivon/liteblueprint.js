@@ -158,9 +158,10 @@ MT4Client.prototype.initSocket = function () {
             if (dat?.status === 'success') {
                 that.cmb_account.options.values = dat.instances.map((v) => {
                     if (typeof v === 'string') {
-                        return {id: v, title: v};
+                        return {iid: v, title: v};
                     }
-                    return v;
+
+                    return {iid: v.iid, ...v.account, title: `${v.account.id}<${v.account.name}>`};
                 });
                 that.cmb_account.value = that._account_default;
                 that.onAccountChange(that._account_default);
@@ -197,12 +198,14 @@ MT4Client.prototype.initSocket = function () {
     return socket;
 };
 
-MT4Client.prototype.register = function (iid) {
+MT4Client.prototype.register = function (param) {
     let that = this;
+
+    let iid = param.iid;
     if (this._io) {
         this._io.emit('register', {iid, type: 'c'}, function (msg) {
             console.log(msg);
-            that._account_default = iid;
+            that._account_default = param;
             that.boxcolor = "#6C6";
             do {
                 let argvs = that._send_data_cache.shift();
