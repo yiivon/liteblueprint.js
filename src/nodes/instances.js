@@ -227,22 +227,21 @@ MT4Client.prototype.trade = function (param) {
             expiration: 1624323223,
             comment: 'from eee'
         * */
-
         if (!param.symbol || !param.volume || !param.type) {
             console.error('trade open error - less param');
             return;
         }
 
-        this._io.emit('action', param);
+        this._io.emit('action', {action: 'trade', data: param});
     } else if (param.action === 'modify') {
 
     } else if (param.action === 'close') {
-        if(!param.id) {
+        if (!param.id) {
             console.error('trade close error - less param');
             return;
         }
 
-        this._io.emit('action', param);
+        this._io.emit('action', {action: 'trade', data: param});
     }
 };
 
