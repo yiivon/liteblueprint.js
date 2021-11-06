@@ -97,7 +97,7 @@ function enableWebGL()
 {
 	if( webgl_canvas )
 	{
-		webgl_canvas.style.display = (webgl_canvas.style.display == "none" ? "block" : "none");
+		webgl_canvas.style.display = (webgl_canvas.style.display === "none" ? "block" : "none");
 		return;
 	}
 
@@ -112,7 +112,7 @@ function enableWebGL()
 
 	function fetchJS()
 	{
-		if(libs.length == 0)
+		if(libs.length === 0)
 			return on_ready();
 
 		var script = null;
@@ -139,7 +139,7 @@ function enableWebGL()
 
 		webgl_canvas.addEventListener("click", function(){
 			var rect = webgl_canvas.parentNode.getBoundingClientRect();
-			if( webgl_canvas.width != rect.width )
+			if( webgl_canvas.width !== rect.width )
 			{
 				webgl_canvas.width = rect.width;
 				webgl_canvas.height = rect.height;
