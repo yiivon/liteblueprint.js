@@ -9414,7 +9414,7 @@ LGraphNode.prototype.executeAction = function(action)
             height = parent.offsetHeight;
         }
 
-        if (this.canvas.width == width && this.canvas.height == height) {
+        if (this.canvas.width === width && this.canvas.height === height) {
             return;
         }
 
